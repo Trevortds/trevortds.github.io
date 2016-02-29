@@ -1,6 +1,9 @@
 # Site navigation links
 
-- title:
-  url:
-  excerpt:
-  image:
+- title: Portfolio
+  url: /blog/
+  excerpt: "things I've designed, blah blah blah"
+  image: paintedsmall.jpg
+
+- title: Made Mistakes
+  url: blahblahblah
