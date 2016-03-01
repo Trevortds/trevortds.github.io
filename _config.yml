@@ -5,7 +5,7 @@ description: >
   Personal website and blog for Trevor Sullivan, linguist and software engineer 
   at the University of Arizona. 
 logo: logo2-1small.png # 120x120 px default image used for Twitter summary card
-teaser: paintedsmall.jpg # 400x250 px default teaser image used in image archive grid
+teaser: logo2-1small.png # 400x250 px default teaser image used in image archive grid
 locale: en
 url: http://localhost:4000
 # url: http://trevortds.github.io
@@ -41,12 +41,14 @@ titlecase: true
 # Site owner
 owner: 
   name: Trevor Sullivan
+  web: http://trevortds.github.io
   email: Trevortds@gmail.com
   twitter:
   google: 
     ad-client:
     ad-slot:
-  bio:
+  bio: >
+    Trevor is a student of human language technology at the University of Arizona. 
   avatar: profile1small.jpg # 160x160 px image for author byline
   disqus-shortname:
 

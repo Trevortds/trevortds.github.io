@@ -1,34 +1,150 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title></title>
+  <title>Trevor Sullivan</title>
   <generator uri="https://github.com/jekyll/jekyll">Jekyll v3.0.3</generator>
-    <icon>/apple-touch-icon-precomposed.png</icon>
-  <subtitle></subtitle>
-  <link href="/atom.xml" rel="self"/>
-  <link href="/" rel="alternate" type="text/html"/>
-  <updated>2016-02-29T16:20:27-07:00</updated>
-  <id>/</id>
+    <icon>http://localhost:4000/apple-touch-icon-precomposed.png</icon>
+  <subtitle>Personal website and blog for Trevor Sullivan, linguist and software engineer  at the University of Arizona. 
+</subtitle>
+  <link href="http://localhost:4000/atom.xml" rel="self"/>
+  <link href="http://localhost:4000/" rel="alternate" type="text/html"/>
+  <updated>2016-02-29T19:27:33-07:00</updated>
+  <id>http://localhost:4000/</id>
   <author>
-    <name></name>
-    <uri>/</uri>
-    
+    <name>Trevor Sullivan</name>
+    <uri>http://localhost:4000/</uri>
+    <email>Trevortds@gmail.com</email>
   </author>
 
   
   <entry>
-    <title>First Post</title>
-    <link href="/first-post/"/>
-    <updated>2016-02-29T00:00:00-07:00</updated>
-    <id>/first-post</id>
+    <title>Instructions for Octopress</title>
+    <link href="http://localhost:4000/blog/instructions-for-octopress/"/>
+    <updated>2016-02-29T18:16:06-07:00</updated>
+    <id>http://localhost:4000/blog/instructions-for-octopress</id>
     <author>
-      <name></name>
-      <uri>/</uri>
-      
+      <name>Trevor Sullivan</name>
+      <uri>http://localhost:4000/</uri>
+      <email>Trevortds@gmail.com</email>
     </author>
     <content type="html">
       
-      &lt;h3 id=&quot;hello-world&quot;&gt;Hello, world!&lt;/h3&gt;
+      &lt;p&gt;To launch site.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;bundle exec jekyll serve
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;To make a new post:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;octopress new post &quot;Instructions for Octopress&quot; --dir blog --template media
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Default dir is _posts/ default template is article.&lt;/p&gt;
+
+&lt;p&gt;Other options, –date, –slug (change the thing that goes after the date in the filename)&lt;/p&gt;
+
+&lt;p&gt;To unpublish a something:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;octopress unpublish _posts/blog/2016-02-29-instructions-for-octopress.md 
+octopress unpublish instructions
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;This moves the selected item to _drafts, where jekyll will egnore it unless launched with the &lt;code class=&quot;highlighter-rouge&quot;&gt;--drafts&lt;/code&gt; option.&lt;/p&gt;
+
+&lt;p&gt;The second line will search for the file with the selected term in the slug. If more than one are found, you get a menu.&lt;/p&gt;
+
+&lt;p&gt;Alternately, use the &lt;code class=&quot;highlighter-rouge&quot;&gt;published:false&lt;/code&gt; option in the front matter&lt;/p&gt;
+
+&lt;p&gt;To republish, same command with &lt;code class=&quot;highlighter-rouge&quot;&gt;publish&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;To see all docs, use  &lt;code class=&quot;highlighter-rouge&quot;&gt;octopress docs&lt;/code&gt;.&lt;/p&gt;
+
+    </content>
+  </entry>
+  
+  <entry>
+    <title>Todo</title>
+    <link href="http://localhost:4000/blog/todo/"/>
+    <updated>2016-02-29T00:00:00-07:00</updated>
+    <id>http://localhost:4000/blog/todo</id>
+    <author>
+      <name>Trevor Sullivan</name>
+      <uri>http://localhost:4000/</uri>
+      <email>Trevortds@gmail.com</email>
+    </author>
+    <content type="html">
+      
+      &lt;p&gt;Change the background color to something less glaring.&lt;/p&gt;
+
+&lt;p&gt;add more blog posts and creative writing from my past&lt;/p&gt;
+
+&lt;p&gt;start writing new stuff&lt;/p&gt;
+
+    </content>
+  </entry>
+  
+  <entry>
+    <title>First Post</title>
+    <link href="http://localhost:4000/blog/first-post/"/>
+    <updated>2016-02-29T00:00:00-07:00</updated>
+    <id>http://localhost:4000/blog/first-post</id>
+    <author>
+      <name>Trevor Sullivan</name>
+      <uri>http://localhost:4000/</uri>
+      <email>Trevortds@gmail.com</email>
+    </author>
+    <content type="html">
+      &lt;img src=&quot;http://localhost:4000/images/north.jpg&quot;&gt;&lt;br/&gt;
+      &lt;nav class=&quot;toc&quot;&gt;
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#hello-world&quot; id=&quot;markdown-toc-hello-world&quot;&gt;Hello, world!&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#lorem-ipsum&quot; id=&quot;markdown-toc-lorem-ipsum&quot;&gt;Lorem ipsum&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;/nav&gt;
+&lt;p&gt;to change message header of toc, go to _data/messages.yml&lt;/p&gt;
+
+&lt;h2 id=&quot;hello-world&quot;&gt;Hello, world!&lt;/h2&gt;
+&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum quis molestie felis. Phasellus pulvinar aliquam nisi ut dictum. Ut tincidunt lacus risus. Sed elementum orci ac ipsum euismod rhoncus. Sed suscipit, neque quis elementum vehicula, justo libero dignissim diam, sit amet tempus justo sapien vel tortor. Mauris euismod, urna nec iaculis dictum, eros dui blandit elit, quis vestibulum leo tellus non orci. Donec vitae congue ligula. Aenean porttitor posuere dui, at molestie felis pulvinar eget. Vestibulum posuere, est vel dictum maximus, sem lacus mattis diam, non aliquam nunc purus vel velit. Sed facilisis enim eu tellus maximus, vel interdum odio dictum. Aliquam eget turpis sit amet turpis iaculis malesuada. Sed at dolor tellus.&lt;/p&gt;
+
+&lt;p&gt;Pellentesque sed tellus faucibus, fermentum mi ac, commodo eros. Etiam dictum, felis et volutpat tristique, felis ex sollicitudin justo, quis tempor augue sapien eu magna. In vitae velit a dui suscipit lacinia. Mauris egestas vehicula ipsum, nec consectetur dui tristique eget. Nam molestie eget ante interdum fermentum. Proin rutrum urna eu nisi bibendum, id molestie tellus lobortis. Maecenas mattis magna pretium justo laoreet, ut finibus ligula aliquet. Morbi tincidunt mi diam, sodales dapibus eros iaculis nec. Vestibulum a pharetra sem, ut sagittis leo.&lt;/p&gt;
+
+&lt;p&gt;Sed ut fringilla tellus. Nullam neque ante, ultricies nec consectetur in, auctor venenatis ex. Vivamus ac mollis erat, ut auctor purus. Vestibulum sodales neque lacus, in condimentum libero rutrum ut. In tincidunt arcu et nulla facilisis blandit. Donec risus odio, aliquam nec mauris eget, egestas pellentesque mauris. Etiam sed hendrerit eros. Proin iaculis dictum hendrerit. Vestibulum iaculis auctor enim, vitae interdum leo efficitur vitae. Mauris dapibus viverra porta.&lt;/p&gt;
+
+&lt;p&gt;Aliquam turpis orci, pellentesque nec semper malesuada, facilisis quis velit. Vestibulum dui elit, pretium ut pulvinar eu, interdum congue velit. Suspendisse ipsum justo, placerat sed tincidunt id, dictum vitae arcu. Etiam iaculis efficitur leo sed facilisis. Aenean venenatis bibendum lorem sollicitudin ornare. Sed eros sem, venenatis non lacus vitae, ultrices blandit lacus. Vestibulum pulvinar aliquam est, vel feugiat velit pretium a. Fusce scelerisque sodales nibh, a tempor odio. Nullam tempor neque et urna convallis pharetra. Phasellus non est id velit lobortis malesuada. Suspendisse quis faucibus dolor. Duis condimentum lobortis sem eu viverra.&lt;/p&gt;
+
+&lt;p&gt;Aliquam ut metus mattis, lacinia orci in, egestas lectus. Quisque suscipit elementum orci, quis dignissim ipsum. Integer mattis urna lectus, sit amet efficitur lectus dapibus at. Vestibulum dictum interdum eleifend. Sed accumsan commodo lacinia. Donec non dapibus nisi. Praesent mi urna, cursus tincidunt molestie non, finibus a libero. Quisque vehicula molestie efficitur. Nulla cursus maximus ipsum in pharetra. Donec maximus enim ut turpis convallis fermentum. Phasellus semper, leo a convallis tincidunt, diam orci fringilla ante, sed elementum metus erat at odio. Duis dui enim, condimentum eu imperdiet vel, venenatis quis magna. Aliquam id libero nec ligula fringilla hendrerit sed sit amet ex. Praesent tortor leo, euismod quis dui lacinia, pulvinar aliquet justo. Ut maximus tempor arcu in facilisis.&lt;/p&gt;
+
+&lt;h2 id=&quot;lorem-ipsum&quot;&gt;Lorem ipsum&lt;/h2&gt;
+&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum quis molestie felis. Phasellus pulvinar aliquam nisi ut dictum. Ut tincidunt lacus risus. Sed elementum orci ac ipsum euismod rhoncus. Sed suscipit, neque quis elementum vehicula, justo libero dignissim diam, sit amet tempus justo sapien vel tortor. Mauris euismod, urna nec iaculis dictum, eros dui blandit elit, quis vestibulum leo tellus non orci. Donec vitae congue ligula. Aenean porttitor posuere dui, at molestie felis pulvinar eget. Vestibulum posuere, est vel dictum maximus, sem lacus mattis diam, non aliquam nunc purus vel velit. Sed facilisis enim eu tellus maximus, vel interdum odio dictum. Aliquam eget turpis sit amet turpis iaculis malesuada. Sed at dolor tellus.&lt;/p&gt;
+
+&lt;p&gt;Pellentesque sed tellus faucibus, fermentum mi ac, commodo eros. Etiam dictum, felis et volutpat tristique, felis ex sollicitudin justo, quis tempor augue sapien eu magna. In vitae velit a dui suscipit lacinia. Mauris egestas vehicula ipsum, nec consectetur dui tristique eget. Nam molestie eget ante interdum fermentum. Proin rutrum urna eu nisi bibendum, id molestie tellus lobortis. Maecenas mattis magna pretium justo laoreet, ut finibus ligula aliquet. Morbi tincidunt mi diam, sodales dapibus eros iaculis nec. Vestibulum a pharetra sem, ut sagittis leo.&lt;/p&gt;
+
+&lt;p&gt;Sed ut fringilla tellus. Nullam neque ante, ultricies nec consectetur in, auctor venenatis ex. Vivamus ac mollis erat, ut auctor purus. Vestibulum sodales neque lacus, in condimentum libero rutrum ut. In tincidunt arcu et nulla facilisis blandit. Donec risus odio, aliquam nec mauris eget, egestas pellentesque mauris. Etiam sed hendrerit eros. Proin iaculis dictum hendrerit. Vestibulum iaculis auctor enim, vitae interdum leo efficitur vitae. Mauris dapibus viverra porta.&lt;/p&gt;
+
+&lt;p&gt;Aliquam turpis orci, pellentesque nec semper malesuada, facilisis quis velit. Vestibulum dui elit, pretium ut pulvinar eu, interdum congue velit. Suspendisse ipsum justo, placerat sed tincidunt id, dictum vitae arcu. Etiam iaculis efficitur leo sed facilisis. Aenean venenatis bibendum lorem sollicitudin ornare. Sed eros sem, venenatis non lacus vitae, ultrices blandit lacus. Vestibulum pulvinar aliquam est, vel feugiat velit pretium a. Fusce scelerisque sodales nibh, a tempor odio. Nullam tempor neque et urna convallis pharetra. Phasellus non est id velit lobortis malesuada. Suspendisse quis faucibus dolor. Duis condimentum lobortis sem eu viverra.&lt;/p&gt;
+
+&lt;p&gt;Aliquam ut metus mattis, lacinia orci in, egestas lectus. Quisque suscipit elementum orci, quis dignissim ipsum. Integer mattis urna lectus, sit amet efficitur lectus dapibus at. Vestibulum dictum interdum eleifend. Sed accumsan commodo lacinia. Donec non dapibus nisi. Praesent mi urna, cursus tincidunt molestie non, finibus a libero. Quisque vehicula molestie efficitur. Nulla cursus maximus ipsum in pharetra. Donec maximus enim ut turpis convallis fermentum. Phasellus semper, leo a convallis tincidunt, diam orci fringilla ante, sed elementum metus erat at odio. Duis dui enim, condimentum eu imperdiet vel, venenatis quis magna. Aliquam id libero nec ligula fringilla hendrerit sed sit amet ex. Praesent tortor leo, euismod quis dui lacinia, pulvinar aliquet justo. Ut maximus tempor arcu in facilisis.&lt;/p&gt;
+
+    </content>
+  </entry>
+  
+  <entry>
+    <title>test2</title>
+    <link href="http://localhost:4000/blog/test/"/>
+    <updated>2000-01-01T00:00:00-07:00</updated>
+    <id>http://localhost:4000/blog/test</id>
+    <author>
+      <name>Trevor Sullivan</name>
+      <uri>http://localhost:4000/</uri>
+      <email>Trevortds@gmail.com</email>
+    </author>
+    <content type="html">
+      &lt;img src=&quot;http://localhost:4000/images/bio-photo.jpg&quot;&gt;&lt;br/&gt;
+      &lt;p&gt;Hello, world!&lt;/p&gt;
 
     </content>
   </entry>
