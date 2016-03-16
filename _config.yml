@@ -7,7 +7,7 @@ description: >
 logo: logo2-1small.png # 120x120 px default image used for Twitter summary card
 teaser: logo2-1small.png # 400x250 px default teaser image used in image archive grid
 locale: en
-# url: http://localhost:4000
+#url: http://localhost:4000
 url: http://trevortds.github.io
 
 # Jekyll configuration
