@@ -43,7 +43,7 @@ is a kind of disappointing rhyme. If I were in a poetry class, that would get me
 >Morde budam, zande shodam gariye budam khande shodam     
 >dult ashagh amad o man dult painde shodam
 
-is totally fine. In fact, most Persian speakers can recite this poem by heart, it's one of the most famous poems by one of the most famous poets, Rumi. Every line ends with "-am" which is the marker for 1st person singular verb agreement, and a Persian speaker would call that rhyme.
+is totally fine. In fact, many Persian speakers can recite this poem by heart, it's one of the most famous poems by one of the most famous poets, Rumi. Every line ends with "-am" which is the marker for 1st person singular verb agreement, and a Persian speaker would call that rhyme.
 
 So, what do we do? For the purposes of this discussion, I'm going to go ahead and say that Persian rhyming rules don't count. I say so at my own peril, but I think that far more languages are like English, and forbid suffix rhyme than like Persian where it counts. This means that we're only going to be looking at stems.
 
