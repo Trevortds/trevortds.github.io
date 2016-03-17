@@ -27,7 +27,7 @@ So, first of all, we need to define "rhyme". The poetic definition is a bit wibb
 
 To reiterate, for the purposes of this answer (which has now become an essay), rime is a linguistic object consisting of a vowel and some number of consonants, and rhyme is a relationship between two words such that they share the same rime.
 Kapeesh?
-Okay, let's go.
+Okay, let's go. 
 
 So, armed with this, let's look at some languages.
 
@@ -40,8 +40,8 @@ So, first, we need to get inflecting languages out of the way. Many, many langua
 
 is a kind of disappointing rhyme. If I were in a poetry class, that would get me a solid C, only because I kept the meter. However, in Persian
 
->Morde budam, zande shodam gariye budam khande shodam     
->dult ashagh amad o man dult painde shodam
+>Morde bodam, zende shodam gerye bodam khande shodam     
+>dowlat e eshgh âmad o man dowlat e pâyande shodam
 
 is totally fine. In fact, many Persian speakers can recite this poem by heart, it's one of the most famous poems by one of the most famous poets, Rumi. Every line ends with "-am" which is the marker for 1st person singular verb agreement, and a Persian speaker would call that rhyme.
 
@@ -69,12 +69,12 @@ and [s] is the exception to everything, because it can appear at the beginning o
 This is the part where we need to actually look at the languages, with all the rules, and try to figure out what is and isn't legal. Now that we have these basic rules, we can make lists of possible nuclei and codas. Thankfully, some very bored people have already done the tedious work for us, and online you can find exhaustive lists of all the possible codas or nuclei of certain languages. Let's stick with Chinese and English, since you brought them up.
 
 ### Chinese
-In Chinese, the syllable structure is rather simple, you only get one onset consonant, one vowel, and one coda syllable, so sonority hierarchy doesn't actually matter. Various institutions have created Pinyin Tables, that contain an exhaustive list of possible syllables, ignoring tone. On this Pinyin Table on Wikipedia (Pinyin table), the rhymes are on the Y axis. We can count the number of rimes simply by counting how many rows there are. But wait! In Chinese, the optional glide is not considered part of the rime (depending on who you ask), so we have to look carefully at the table, and only count the rows without glides. By my count, that gives us 21 rimes. Hooray!
+In Chinese, the syllable structure is rather simple, you only get one onset consonant, one vowel, and one coda syllable, so sonority hierarchy doesn't actually matter. Various institutions have created Pinyin Tables, that contain an exhaustive list of possible syllables, ignoring tone. On this Pinyin Table on Wikipedia (<a href="https://en.wikipedia.org/wiki/Pinyin_table">Pinyin table</a>), the rhymes are on the Y axis. We can count the number of rimes simply by counting how many rows there are. But wait! In Chinese, the optional glide is not considered part of the rime (depending on who you ask), so we have to look carefully at the table, and only count the rows without glides. By my count, that gives us 21 rimes. Hooray!
 
 ### English
 Jesus Christ, how are we going to count English rimes? Well, we'll have to do some combinatorics, there are simply too many possibilities for anybody to make a table that means anything. There are a few tables we can use, though.
 
-On this wikipedia page, you'll find a list of possible codas in English, ignoring the final /s/: English phonology. The creators of this list already took into account the maximal form and sonority hierarchy, as well as a couple more specific rules that English has. If we count all of those, we should get a total number of possible codas of 97 . Since you can stick an /s/ or a /t/ or /d/ on any of these as inflectional markers, we're going to go ahead and ignore those, since up above, remember, we said we're not going to count inflection. Since you can also have no coda, we're going to stick an extra possibility on there for a total of 98.
+On this wikipedia page, you'll find a list of possible codas in English, ignoring the final /s/: <a href="https://en.wikipedia.org/wiki/English_phonology#Coda">English phonology</a>. The creators of this list already took into account the maximal form and sonority hierarchy, as well as a couple more specific rules that English has. If we count all of those, we should get a total number of possible codas of 97 . Since you can stick an /s/ or a /t/ or /d/ on any of these as inflectional markers, we're going to go ahead and ignore those, since up above, remember, we said we're not going to count inflection. Since you can also have no coda, we're going to stick an extra possibility on there for a total of 98.
 
 So now we've got a count of codas, but a rime is a coda put next to a vowel. English, depending on your dialect, has around 15 vowels (normally I would count almost twice that, but our list of codas counts rhoticity as a consonant, I think that's wrong, but whatever). If we naively assume that any vowel can be stacked with any coda to produce a rhyme, that gives us 15*98=1470 rimes. Holy shit. This language, man, this language.
 
