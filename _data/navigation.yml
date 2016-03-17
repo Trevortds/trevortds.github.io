@@ -2,8 +2,13 @@
 
 - title: Blog
   url: /blog/
-  excerpt: "things I've designed, blah blah blah"
-  image: paintedsmall.jpg
+  excerpt: "Blog posts, informational pieces, and opinions."
+  image: paintedsmall.jpg #300x200
+
+- title: Creative Writing
+  url: /creativewriting/
+  exerpt: "Poetry and Fiction."
+  image: catdesert.jpg
 
 - title: About
   url: /about/
