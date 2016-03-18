@@ -10,7 +10,7 @@ image:
   teaser:
   thumb:
 date: 2014-03-30T20:22:00-07:00
-published: false
+published: true
 ---
 
 On “God's Not Dead”. 
