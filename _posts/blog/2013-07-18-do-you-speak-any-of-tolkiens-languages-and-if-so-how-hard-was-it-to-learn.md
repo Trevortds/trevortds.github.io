@@ -3,7 +3,7 @@ layout: article
 title: Do You Speak Any of Tolkien's Languages, and if So, How Hard Was It to Learn?
 modified:
 categories: blog
-excerpt: *Featured on Huffington Post* I have studied both Sindarin and Quenya, and I can say they are extremely difficult to learn, for three main reasons:
+excerpt: Featured on Huffington Post I have studied both Sindarin and Quenya, and I can say they are extremely difficult to learn, for three main reasons:
 tags: []
 image:
   feature:
@@ -12,7 +12,7 @@ image:
 date: 2013-07-18T10:00:49-07:00
 ---
 
-
+*Featured on Huffington Post*
 
 I have studied both Sindarin and Quenya, and I can say they are extremely difficult to learn, for three main reasons:
 
