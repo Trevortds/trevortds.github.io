@@ -1,7 +1,7 @@
 ---
 layout: article
 title: Instructions for Octopress
-date: 2016-02-29T18:16:06-07:00
+date: 2000-02-29T18:16:06-07:00
 modified:
 categories: blog
 excerpt:
