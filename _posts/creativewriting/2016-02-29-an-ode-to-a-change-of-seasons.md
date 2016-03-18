@@ -10,7 +10,6 @@ image:
   teaser:
   thumb:
 date: 2012-07-4
-published: false
 ---
 
 #Ode to A Change of Seasons 

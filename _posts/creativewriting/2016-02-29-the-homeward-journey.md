@@ -10,7 +10,6 @@ image:
   teaser:
   thumb:
 date: 2010-09-07
-published: false
 ---
 
 Young traveler listen to my tale

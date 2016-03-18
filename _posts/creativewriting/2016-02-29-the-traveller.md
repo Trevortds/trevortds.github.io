@@ -10,7 +10,6 @@ image:
   teaser:
   thumb:
 date: 2013-12-13
-published: false
 ---
 
 A boy and his balloon
