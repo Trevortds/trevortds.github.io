@@ -16,7 +16,7 @@ date: 2016-05-23T18:36:25-07:00
 ## Original Question:
 
 ### What does it feel like if the house you are in is hit by lightning?
-Unless you are connected to the houses electrical system, you won’t die, that’s the good news.
+Unless you are connected to the house's electrical system, you won’t die, that’s the good news.
 
 If you are in a high occupancy building, a tall building, or an expensive building, it will have systems in place to divert electric flow in a safe direction, so you will feel nothing. Even better than not being dead!
 
