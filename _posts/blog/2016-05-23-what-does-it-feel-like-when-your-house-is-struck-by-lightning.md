@@ -26,6 +26,9 @@ You see, when the current of lightning goes through your house’s internal wiri
 
 Then you need to pick out the glass shards from your dog. Oh, did I not mention? The shock of the thunder at range zero has a tendency to shatter glass. And wood. And rock. And brick. And concrete. Make sure all that stuff isn’t broken.
 
-I mean, aside from the pain, and the fear, and the panic, and the material loss, it feels like not being dead, I guess. Enjoy.
+I mean, aside from the pain, and the fear, and the panic, and the material loss, it feels like not being dead, I guess, so, pretty good. Enjoy.
+
+
+
 
 For now.
