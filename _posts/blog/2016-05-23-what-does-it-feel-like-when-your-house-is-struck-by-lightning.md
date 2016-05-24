@@ -12,7 +12,6 @@ image:
 date: 2016-05-23T18:36:25-07:00
 ---
 
-{% include toc.html %}
 
 ## Original Question:
 
