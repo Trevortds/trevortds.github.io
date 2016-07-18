@@ -7,8 +7,8 @@ excerpt: Unless you are connected to the houses electrical system, you won’t d
 tags: [lightning, death, humor]
 image:
   feature: north.jpg
-  teaser: 
-  thumb: 
+  teaser: lightning.jpg
+  thumb: lightning.jpg
 date: 2016-05-23T18:36:25-07:00
 ---
 
