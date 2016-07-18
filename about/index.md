@@ -5,7 +5,7 @@ date: 2016-02-29T18:16:55-07:00
 modified:
 excerpt:
 image:
-  feature:
+  feature: lookingleftcut.png
   teaser:
   thumb:
 ads: false
@@ -28,6 +28,8 @@ I'm well versed in Object Oriented Programming, and test-driven development, as 
 I am comfortable working in Java and Python, these are my go-to languages, but I also have a various degrees of experience in each of: Perl, Prolog, Matlab, C#, C, and MIPS assembly, in roughly decreasing order of comfort.  I'm also proficient in client-side web technologies (HTML/CSS/Javascript) and the Django web backend, based on Python.
 
 As a hobby, I am a cryptography enthusiast, a pc gamer, and an amateur historian. I host and produce the semiweekly **Great Persons** podcast with my cohost Jared Feindt. (launch in August 2016, working title)
+
+![Straighton]({{ site.url }}/images/straighton.png)
 
 
 # Biography
