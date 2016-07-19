@@ -5,15 +5,11 @@ date: 2016-02-29T18:16:55-07:00
 modified:
 excerpt:
 image:
-  feature: lookingleftcut.png
+  feature: lookingleftcut.jpg
   teaser:
   thumb:
 ads: false
 ---
-
-# About
-
-My name is Trevor Sullivan. 
 
 I am a computational linguist, presently studying at the University of Arizona in the Human Language Technology program. 
 
@@ -29,7 +25,7 @@ I am comfortable working in Java and Python, these are my go-to languages, but I
 
 As a hobby, I am a cryptography enthusiast, a pc gamer, and an amateur historian. I host and produce the semiweekly **Great Persons** podcast with my cohost Jared Feindt. (launch in August 2016, working title)
 
-![Straighton]({{ site.url }}/images/straighton.png)
+![Straighton]({{ site.url }}/images/straighton.jpg)
 
 
 # Biography
