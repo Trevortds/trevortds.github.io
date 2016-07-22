@@ -1,5 +1,10 @@
 # Site navigation links
 
+- title: Development Log
+  url: /devlogs/
+  excerpt: "Writings concerning current projects."
+  image: binary-code.jpg
+  
 - title: Blog
   url: /blog/
   excerpt: "Blog posts, informational pieces, and opinions."
