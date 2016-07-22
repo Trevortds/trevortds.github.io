@@ -2,6 +2,8 @@
 layout: archive
 title: Development Log
 permalink: /devlogs/
+image:
+  feature: north.jpg
 ---
 
 <div class="tiles">

@@ -2,6 +2,8 @@
 layout: archive
 title: Blog
 permalink: /blog/
+image:
+  feature: north.jpg
 ---
 
 <div class="tiles">

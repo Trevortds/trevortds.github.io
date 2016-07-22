@@ -2,6 +2,8 @@
 layout: archive
 title: Creative Writing
 permalink: /creativewriting/
+image:
+  feature: north.jpg
 ---
 
 <div class="tiles">
