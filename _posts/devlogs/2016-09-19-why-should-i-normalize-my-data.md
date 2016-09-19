@@ -53,25 +53,25 @@ Tadaa, you have a probability distribution.
 
 Note that most implementations will actually do this for you. For example, the following two matlab snippets are identical. 
 
-'''matlab
+```matlab
 tr = [4 5 2 4;
       0 3 10 2;
       6 5 3 1;
       0 0 2 13];
 
 hmmdecode(some_string, tr)
-'''
+```
 
 and 
 
-'''matlab
+```matlab
 tr = [.26 .33 .13 .26;
       0   .2  .66 .13;
       .4  .33 .2  .07;
       0   0   .13 .87];
 
 hmmdecode(some_string, tr)
-'''
+```
 
 Because the Matlab HMM module automaticaly normalizes the data in the matrices it's given. You generally don't have to do this unless you're working on a low-level implementation of one of these algorithms. 
 
