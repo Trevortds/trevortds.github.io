@@ -12,13 +12,13 @@ image:
 date: 2016-09-19T13:41:54-07:00
 ---
 
-Let's start at the beginning. 
+work in progress, parden my mess
 
-## What is data normalization?
+### What is data normalization?
 
 To begin with, we have a potential for confusion. Mathematicians, ever so good at naming things, use this word to describe three very different unrelated operations. This has caused me confusion in the past, so I wanted to lay it all down. 
 
-### 1: Vector Normalization
+#### 1: Vector Normalization
 
 Vector normalization is my favorite of the three because it has a regular name that is used to distinguish it from the other two, so I will dwell on it the least. Lots of computer programming applications will require a handling of vectors, one-dimensional matrices of values referring to a single element. This is visualized in the context of a physics vector, a thing in the real world that has motion in some number of dimensions, but it could be anything. You might have a vector with the number of people in your company in one dimension, and the size of the front door on another. You probably won't learn from those values, but you can. 
 
@@ -31,7 +31,7 @@ In this diagram, we don't care about u. What we want to learn about are α, β, 
 When you want to capture relationships between dimensions, rather than between data points, this is the way to go. But it's not what we're talking about here. 
 
 
-### 2. Proportional Normalization
+#### 2. Proportional Normalization
 
 Some machine learning methods and algorithms require inputs or (more often) initial parameters to have a probability distribution. i.e., when taken together, they must sum to 1. Why this is necessary may be algorithm or implementation specific. 
 
@@ -39,6 +39,39 @@ For example, at every point in its life, every transition vector and every emiss
 
 ![My thanks to Evan Wallace]({{ site.url }}/images/devlogs/hmm.png)
 
+The calculation of this value is pretty simple. 
+
 <div>
-$$ x = 24 $$
+\begin{equation}
+	norm(x_{n}) = \frac{x_{n}}{\sum_{N} x_{n}}
+\end{equation}
 </div>
+
+Tadaa, you have a probability distribution. 
+
+Note that most implementations will actually do this for you. For example, the following two matlab snippets are identical. 
+
+
+    tr = [4 5 2 4;
+          0 3 10 2;
+          6 5 3 1;
+          0 0 2 13];
+
+    hmmdecode(some_string, tr)
+
+and 
+
+	tr = [.26 .33 .13 .26;
+	      0   .2  .66 .13;
+	      .4  .33 .2  .07;
+	      0   0   .13 .87];
+
+	hmmdecode(some_string, tr)
+
+Because the Matlab HMM module automaticaly normalizes the data in the matrices it's given. You generally don't have to do this unless you're working on a low-level implementation of one of these algorithms. 
+
+
+#### 3. Data Normalization
+
+Also sometimes called 0-1 normalization, but don't confuse it with the above, where you generate a 0-1 probability distribution. The difference is that, even though this type of normalization generates values between 0 and 1, but they do not sum to 1. 
+
