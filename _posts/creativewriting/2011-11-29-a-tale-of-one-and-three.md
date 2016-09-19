@@ -12,9 +12,11 @@ image:
 date: 2011-11-29
 ---  
 
+test
+
 Boy was I obsessed with classics when I wrote this so long ago. My teacher told me to get it published, but I didn't feel like it was good. Well guess what! Now it is published! On a blog that nobody reads! Anyway, enjoy. 
 
----
+-------
 
 “You simply don't have the evidence”  
 
