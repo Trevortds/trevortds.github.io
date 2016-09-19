@@ -51,7 +51,7 @@ Tadaa, you have a probability distribution.
 
 -----
 
-Note that most implementations will actually do this for you. For example, the following two matlab snippets are identical. 
+Note that most implementations will actually do this for you. For example, the following two matlab snippets produce identical results. 
 
 ```matlab
 tr = [4 5 2 4;
@@ -62,7 +62,6 @@ tr = [4 5 2 4;
 hmmdecode(some_string, tr)
 ```
 
-and 
 
 ```matlab
 tr = [.26 .33 .13 .26;
