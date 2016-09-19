@@ -49,6 +49,8 @@ The calculation of this value is pretty simple.
 
 Tadaa, you have a probability distribution. 
 
+-----
+
 Note that most implementations will actually do this for you. For example, the following two matlab snippets are identical. 
 
 
