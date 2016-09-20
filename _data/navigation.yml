@@ -1,11 +1,17 @@
 # Site navigation links
 
-- title: Development Log
+
+- title: About
+  url: /about/
+  exerpt: "About me"
+  image: profile1small.jpg
+
+- title: DevLog
   url: /devlogs/
   excerpt: "Writings concerning current projects."
   image: binary-code.jpg
   
-- title: Blog
+- title: Personal Blog
   url: /blog/
   excerpt: "Blog posts, informational pieces, and opinions."
   image: paintedsmall.jpg #300x200
@@ -15,7 +21,3 @@
   exerpt: "Poetry and Fiction."
   image: catdesert.jpg
 
-- title: About
-  url: /about/
-  exerpt: "About me"
-  image: profile1small.jpg

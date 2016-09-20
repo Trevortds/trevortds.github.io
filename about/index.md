@@ -11,6 +11,8 @@ image:
 ads: false
 ---
 
+[Resume here]({{ site.url}}/about/TSullivanResume.pdf) (last updated September 2016)
+
 I am a computational linguist, presently studying at the University of Arizona in the Human Language Technology program. 
 
 As for the contents of this website, this is a place for me to post my thoughts, written work, and development logs. I post here on a roughly monthly basis. 
