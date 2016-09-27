@@ -9,7 +9,7 @@ image:
   feature: creativewriting/dark_alley.jpg
   teaser:
   thumb:
-date: 2011-11-29
+date: 2016-05-29
 ---  
 
 Boy was I obsessed with classics when I wrote this so long ago. My teacher told me to get it published, but I didn't feel like it was good. Well guess what! Now it is published! On a blog that nobody reads!  
