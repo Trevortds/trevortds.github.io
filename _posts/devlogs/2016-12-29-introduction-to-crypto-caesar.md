@@ -79,8 +79,8 @@ def rotate(alphabet, key):
 Simple enough, right? Let's see what Augustus's rotation looked like. 
 
 ```python
-In [2]: rotate(alphabet, 1)
-Out[2]: 
+In [1]: rotate(alphabet, 1)
+Out[1]: 
 ['b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t',
  'u','v','w','x','y','z','a']
 ```
