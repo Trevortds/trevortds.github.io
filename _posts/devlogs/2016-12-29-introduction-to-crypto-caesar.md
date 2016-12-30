@@ -47,7 +47,7 @@ Alice is a field agent of the Fingian rebels, deep undercover in the heart of th
 
 #### Bob
 
-Bob is Alice's handler back at the secret rebel base far in the outskirts of the empire. Bob needs to be able to receive and understand Alice's messages so that the Rebels can avoid Thangorian crackdowns and strike where they are weakest. 
+Bob is Alice's handler back at the secret rebel base far in the outskirts of the empire. Bob needs to be able to receive and understand Alice's messages so that the Rebels can avoid Thangorian crackdowns, and strike the Imperial Forces where they are weakest. 
 
 #### Eve
 
@@ -60,7 +60,7 @@ Eve is Alice's roommate. She has no particular love for the Empire, but she is l
 
 Alice needs to send a message to Bob, but she does not want Eve to be able to read it. One of the oldest and most often cited methods for this task is the Caesar Cipher. 
 
-The Caesar Cipher is very simple. If you are like me, you probably played with it as a child with one of these "decoder rings". that were often found as prizes in cereal boxes.  
+The Caesar Cipher is very simple. If you are like me, you probably played with it as a child with one of these "decoder rings", that were often found as prizes in cereal boxes.  
 
 ![Decoder Ring from the 30s]({{ site.url }}/images/devlogs/decoderring.jpg)
 
@@ -72,7 +72,7 @@ Here is my implementation of the shift.
 alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p',
             'q','r','s','t','u','v','w','x','y','z']
 def rotate(alphabet, key):
-    key = key % len(alphabet)
+    key = key % len(alphabet) # in case the key is 27 or higher for some reason
     return alphabet[key:] + alphabet[:key]
 ```
 
@@ -97,7 +97,7 @@ def encrypt(plaintext, key):
         if char in alphabet:
             ciphertext += alpharotation[alphabet.index(char)]
         else:
-            ciphertext += char
+            ciphertext += char # leave punctuation and spaces as is
 
     return ciphertext
 ```
@@ -111,7 +111,11 @@ Most of this is preparation and edge cases (characters in the message not in the
         ciphertext += alpharotation[alphabet.index(char)]
 ```
 
-Note the core piece is that each character in the plaintext is replaced by a single ciphertext character, dependent only on the plaintext character itself. That's why this technique is a **Single Substitution Cipher**. Every character is replaced by exactly one other character. 
+Note that the central piece of the encryption process is to replace each character in the plaintext with a single ciphertext character, dependent only on the plaintext character itself. That's why this technique is the prime example of a class of ciphers known as **Single Substitution Ciphers**. Every character is replaced by exactly one other character. 
+
+Other single substitution ciphers may involve performing scrambles other than rotations to the alphabet, or changing to another alphabet entirely (as in Pigpen or Numeric Caesar), but they all function in fundamentally the same way, and share the same weaknesses. 
+
+But I digress, let me run this code for you and see how it works. 
 
 ```python
 In [2]: encrypt("this is a secret message", 1)
@@ -190,7 +194,7 @@ vm aolt dlyl ahsrpun hivba nvukvszilyn. fvb thf il hisl av jhajo aolt vu aol
 yvhk'
 ```
 
-Since this is a short message, frequencies other than the top ones can't be relied on too heavily, but some of these seem to make sense. "ee" is a common sequence, which is encouraging. She tries to substitute 'o' for the next most common letter, 'n'. This is a stretch, but it might work. 
+Since this is a short message, frequencies other than the top ones can't be relied on too heavily, but some of these seem to make sense. "ee" is a common sequence, which is encouraging. She tries to substitute `o` for the next most common letter, 'n'. This is a stretch, but it might work. 
 
 ```
    a  tn ee t      o  tne    a  o t o  tne  a  ta   a e    tn  o   e     o e
@@ -224,7 +228,7 @@ roa
 yvhk'
 ```
 
-The third word in the second line could be "here" or "were", but we already think that 'o' represents 'h', so we guess that d is 'w'
+The third word in the second line could be "here" or "were", but we already think that `o` represents 'h', so we guess that `d` is 'w'
 
 ```
    aw three tr     o  the r wa  o t o  the  a  ta   a e  w th  o   er    o e
@@ -250,7 +254,7 @@ yvhk'
 
 The rest falls in very quickly as you fill the gaps. At this point, Eve could continue as before and keep guessing individual letters based on patterns. 
 
-Or, if she believe that she're dealing with a Caesar cipher, she can guess the key, there is only one rotation that maps 't' to 'a' and 'e' to 'l'. Checking against a table of Caesar rotations will quickly give Eve the key, at which point cracking the rest is trivial. 
+Or, if she believe that she's dealing with a Caesar cipher, she can guess the key: there is only one Caesar rotation that maps 't' to `a` and 'e' to `l`. Checking against a table of Caesar rotations will quickly give Eve the key, at which point cracking the rest is trivial. 
 
 ```
 i saw three trucks on their way out of the capital laden with soldiers  some
@@ -265,5 +269,7 @@ The reply from Bob is left as an exercise to the reader.
 
     'leuvijkffu rxvek rcztv kyviv riv ivsvc xlvizccrj fe kyvzi nrp kf zekvitvgk. nvcc ufev. r evn zewfidrek nveup yrj druv tfekrtk nzky lj, dvvk yvi rk 1700 ze kyv jhlriv kfdfiifn'
 
+
+-------
 
 Next time, an extension of Caesar, **The Vignere Cipher**
