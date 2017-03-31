@@ -74,6 +74,27 @@ def decrypt(ciphertext, key, alphabet=alphabet):
 ```
 
 
+## Weakness: Frequency Analysis
+
+Unfortunately, Vignere is also not perfect. We will not run through the entire example here, but looking closely at the above, you may have noticed the issue. 
+
+```
+ plaintext: thisisasecretmessage
+       key: catcatcatcatcatcatca
+ciphertext: vhbuilcsxerxvmxustie
+```
+
+Notice that whenever a letter in the plaintext meets the same match in the key, its result in the ciphertext is also the same. In the above message, t lines up with c resulting in v twice, and e lines up with t resulting in x three times. If the message is long enough, and the key short enough, the same method can be used to crack it. 
+
+There are sneakier methods though that don't require a weak key to make cryptanalysis feasible. 
+
+## Weakness: Kasiski Examination
+
+In a military text, it is likely that words will appear multiple times, and whenever this happens, there is a likelihood that the ciphertext will also repeat equal to `1/len(key)`
+
+<pre>
+<b>vhkgem<\b>jagiokknycnmtywkvbuihpsttefqvbpgmqwttdlvhx<b>vhkge<\b>igadurxdeedalg
+<pre>
 
 
 
