@@ -7,8 +7,8 @@ excerpt:
 tags: [crypto, cipher, ciphers]
 image:
   feature: north.jpg
-  teaser: tabula_recta.png
-  thumb: tabula_recta.png
+  teaser: /devlogs/tabula_recta.png
+  thumb: /devlogs/tabula_recta.png
 date: 2016-12-29T13:27:09-07:00
 ---
 
