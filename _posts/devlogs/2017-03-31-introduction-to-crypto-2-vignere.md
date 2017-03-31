@@ -93,8 +93,8 @@ There are sneakier methods though that don't require a weak key to make cryptana
 In a military text, it is likely that words will appear multiple times, and whenever this happens, there is a likelihood that the ciphertext will also repeat equal to `1/len(key)`
 
 <pre>
-<b>vhkgem<\b>jagiokknycnmtywkvbuihpsttefqvbpgmqwttdlvhx<b>vhkge<\b>igadurxdeedalg
-<\pre>
+<b>vhkgem</b>jagiokknycnmtywkvbuihpsttefqvbpgmqwttdlvhx<b>vhkge</b>igadurxdeedalg
+</pre>
 
 
 
