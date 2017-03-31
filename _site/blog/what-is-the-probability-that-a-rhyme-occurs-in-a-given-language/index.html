@@ -53,10 +53,16 @@
 	<li class="home"><a href="/">Trevor Sullivan</a></li>
 	
     
-    <li><a href="http://localhost:4000/blog/" >Blog</a></li>
+    <li><a href="http://localhost:4000/about/" >About</a></li>
   
     
-    <li><a href="http://localhost:4000/about/" >About</a></li>
+    <li><a href="http://localhost:4000/devlogs/" >DevLog</a></li>
+  
+    
+    <li><a href="http://localhost:4000/blog/" >Personal Blog</a></li>
+  
+    
+    <li><a href="http://localhost:4000/creativewriting/" >Creative Writing</a></li>
   
 </ul>
     </nav>
@@ -66,15 +72,27 @@
   <h5>Trevor Sullivan <span>Table of Contents</span></h5>
   <ul class="menu-item">
     <li>
-      <a href="http://localhost:4000/blog/">
-        <img src="http://localhost:4000/images/paintedsmall.jpg" alt="teaser" class="teaser">
-        <div class="title">Blog</div>
-        <p class="excerpt">things I've designed, blah blah blah</p>
+      <a href="http://localhost:4000/about/">
+        <img src="http://localhost:4000/images/profile1small.jpg" alt="teaser" class="teaser">
+        <div class="title">About</div>
+        
       </a>
     </li><li>
-      <a href="http://localhost:4000/about/">
-        
-        <div class="title">About</div>
+      <a href="http://localhost:4000/devlogs/">
+        <img src="http://localhost:4000/images/binary-code.jpg" alt="teaser" class="teaser">
+        <div class="title">DevLog</div>
+        <p class="excerpt">Writings concerning current projects.</p>
+      </a>
+    </li><li>
+      <a href="http://localhost:4000/blog/">
+        <img src="http://localhost:4000/images/paintedsmall.jpg" alt="teaser" class="teaser">
+        <div class="title">Personal Blog</div>
+        <p class="excerpt">Blog posts, informational pieces, and opinions.</p>
+      </a>
+    </li><li>
+      <a href="http://localhost:4000/creativewriting/">
+        <img src="http://localhost:4000/images/catdesert.jpg" alt="teaser" class="teaser">
+        <div class="title">Creative Writing</div>
         
       </a>
     </li>
@@ -157,11 +175,11 @@ birds of air and flowers blooming</p>
 <p>is a kind of disappointing rhyme. If I were in a poetry class, that would get me a solid C, only because I kept the meter. However, in Persian</p>
 
 <blockquote>
-  <p>Morde budam, zande shodam gariye budam khande shodam   <br />
-dult ashagh amad o man dult painde shodam</p>
+  <p>Morde bodam, zende shodam gerye bodam khande shodam   <br />
+dowlat e eshgh âmad o man dowlat e pâyande shodam</p>
 </blockquote>
 
-<p>is totally fine. In fact, most Persian speakers can recite this poem by heart, it’s one of the most famous poems by one of the most famous poets, Rumi. Every line ends with “-am” which is the marker for 1st person singular verb agreement, and a Persian speaker would call that rhyme.</p>
+<p>is totally fine. In fact, many Persian speakers can recite this poem by heart, it’s one of the most famous poems by one of the most famous poets, Rumi. Every line ends with “-am” which is the marker for 1st person singular verb agreement, and a Persian speaker would call that rhyme.</p>
 
 <p>So, what do we do? For the purposes of this discussion, I’m going to go ahead and say that Persian rhyming rules don’t count. I say so at my own peril, but I think that far more languages are like English, and forbid suffix rhyme than like Persian where it counts. This means that we’re only going to be looking at stems.</p>
 
@@ -187,12 +205,12 @@ stops &lt; &lt; &lt; delayed release &lt; &lt; continuants &lt; &lt; sonorants &
 <p>This is the part where we need to actually look at the languages, with all the rules, and try to figure out what is and isn’t legal. Now that we have these basic rules, we can make lists of possible nuclei and codas. Thankfully, some very bored people have already done the tedious work for us, and online you can find exhaustive lists of all the possible codas or nuclei of certain languages. Let’s stick with Chinese and English, since you brought them up.</p>
 
 <h3 id="chinese">Chinese</h3>
-<p>In Chinese, the syllable structure is rather simple, you only get one onset consonant, one vowel, and one coda syllable, so sonority hierarchy doesn’t actually matter. Various institutions have created Pinyin Tables, that contain an exhaustive list of possible syllables, ignoring tone. On this Pinyin Table on Wikipedia (Pinyin table), the rhymes are on the Y axis. We can count the number of rimes simply by counting how many rows there are. But wait! In Chinese, the optional glide is not considered part of the rime (depending on who you ask), so we have to look carefully at the table, and only count the rows without glides. By my count, that gives us 21 rimes. Hooray!</p>
+<p>In Chinese, the syllable structure is rather simple, you only get one onset consonant, one vowel, and one coda syllable, so sonority hierarchy doesn’t actually matter. Various institutions have created Pinyin Tables, that contain an exhaustive list of possible syllables, ignoring tone. On this Pinyin Table on Wikipedia (<a href="https://en.wikipedia.org/wiki/Pinyin_table">Pinyin table</a>), the rhymes are on the Y axis. We can count the number of rimes simply by counting how many rows there are. But wait! In Chinese, the optional glide is not considered part of the rime (depending on who you ask), so we have to look carefully at the table, and only count the rows without glides. By my count, that gives us 21 rimes. Hooray!</p>
 
 <h3 id="english">English</h3>
 <p>Jesus Christ, how are we going to count English rimes? Well, we’ll have to do some combinatorics, there are simply too many possibilities for anybody to make a table that means anything. There are a few tables we can use, though.</p>
 
-<p>On this wikipedia page, you’ll find a list of possible codas in English, ignoring the final /s/: English phonology. The creators of this list already took into account the maximal form and sonority hierarchy, as well as a couple more specific rules that English has. If we count all of those, we should get a total number of possible codas of 97 . Since you can stick an /s/ or a /t/ or /d/ on any of these as inflectional markers, we’re going to go ahead and ignore those, since up above, remember, we said we’re not going to count inflection. Since you can also have no coda, we’re going to stick an extra possibility on there for a total of 98.</p>
+<p>On this wikipedia page, you’ll find a list of possible codas in English, ignoring the final /s/: <a href="https://en.wikipedia.org/wiki/English_phonology#Coda">English phonology</a>. The creators of this list already took into account the maximal form and sonority hierarchy, as well as a couple more specific rules that English has. If we count all of those, we should get a total number of possible codas of 97 . Since you can stick an /s/ or a /t/ or /d/ on any of these as inflectional markers, we’re going to go ahead and ignore those, since up above, remember, we said we’re not going to count inflection. Since you can also have no coda, we’re going to stick an extra possibility on there for a total of 98.</p>
 
 <p>So now we’ve got a count of codas, but a rime is a coda put next to a vowel. English, depending on your dialect, has around 15 vowels (normally I would count almost twice that, but our list of codas counts rhoticity as a consonant, I think that’s wrong, but whatever). If we naively assume that any vowel can be stacked with any coda to produce a rhyme, that gives us 15*98=1470 rimes. Holy shit. This language, man, this language.</p>
 
@@ -252,10 +270,11 @@ stops &lt; &lt; &lt; delayed release &lt; &lt; continuants &lt; &lt; sonorants &
 		
 		</ul>
 	</nav><!-- /.bottom-menu -->
-	<p class="copyright">&#169; 2016 <a href="http://localhost:4000">Trevor Sullivan</a> powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> + <a href="http://mmistakes.github.io/skinny-bones-jekyll/" rel="nofollow">Skinny Bones</a>.</p>
+	<p class="copyright">&#169; 2017 <a href="http://localhost:4000">Trevor Sullivan</a> powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> + <a href="http://mmistakes.github.io/skinny-bones-jekyll/" rel="nofollow">Skinny Bones</a>.</p>
 </footer>
     </div>
 
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="http://localhost:4000/js/vendor/jquery-1.9.1.min.js"></script>
     <script src="http://localhost:4000/js/main.js"></script>
 

@@ -1,0 +1,44 @@
+<h1 id="cryptography">Cryptography</h1>
+
+<p>This is the first of a short series on cryptographic methods and their history, for no other reason than that I really like cryptography.</p>
+
+<p>Cryptography is the art of concealing information in plain sight. Cryptography is subdivided into two main types. <strong>Codes</strong> and <strong>Ciphers</strong>.</p>
+
+<p><strong>Codes</strong> are the bread and butter of <em>semantic cryptography</em>. What is <em>encoded</em> (note, not <em>encrypted</em>), is the meaning of the message, not the message itself. The following is an encoded message.</p>
+
+<blockquote>
+  <p>The Eagle has left the Nest, repeat, the Eagle has left the Nest, over.
+This is Yorkshire Terrier, I’m on my way to the library to check out three books.</p>
+</blockquote>
+
+<p>You have probably noticed that the message itself is plain to see, but the details of it are obscured by <em>codewords</em>. Unlike encipherment, encoding is immediate, baked into the message. This makes it fast, perfect for short-wave radio communication, like what you were imagining in your head reading the above. Coding is interesting in its own right, but it’s not what this series is about.</p>
+
+<p><strong>Ciphers</strong> are methods used in <em>textual cryptography</em>, which is what we aim to explore. The thing that is <em>encrypted</em> is the message itself, rather than its content. The following is an encrypted message.</p>
+
+<blockquote>
+  <p>Htslwfyzqfyntsxdtzajzsufhpjiymjxjhwjyrjxxflj.Ltrfpjdtzwxjqkflttixfsibnyhmfxfbjqqijxjwajiwjbfwi</p>
+</blockquote>
+
+<p>You can’t even begin to guess what this one means, but by the time you hit the bottom of this page, you’ll know where to start.</p>
+
+<p>But before we begin, let me introduce the cast</p>
+
+<hr />
+
+<h2 id="dramatis-personae">Dramatis Personae</h2>
+
+<p>Before we begin, as part of the time-honored tradition of cryptography, we need to establish some characters who are going to be sending secret messages.</p>
+
+<h3 id="alice">Alice</h3>
+
+<p>Alice is a field agent of the Fingian rebels, deep undercover in the heart of the Thangor Empire. Her public face is as a reporter, to the limited extent that reporters exist amidst the oppressive regime, but it still allows her a small degree of additional freedom of movement, which is all she really needs.</p>
+
+<h3 id="bob">Bob</h3>
+
+<p>Bob is Alice’s handler back at the secret rebel base far in the outskirts of the empire. Bob needs to be able to receive and understand Alice’s messages so that the Rebels can avoid Thangorian crackdowns and strike where they are weakest.</p>
+
+<h3 id="eve">Eve</h3>
+
+<p>Eve is Alice’s roommate. She has no particular love for the Empire, but she is loyal nonetheless, and more than a bit nosy. As a good citizen, she is encouraged to spy on her neighbors by the government, and she often eavesdrops on Alice’s outbound mail. If Eve discovers the nature of Alice’s messages, she will report her to the authorities, and all will be lost.</p>
+
+<hr />

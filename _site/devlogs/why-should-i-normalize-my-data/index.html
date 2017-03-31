@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Why Should I Normalize My Data? • Trevor Sullivan</title>
+    <meta name="description" content="work in progress, parden my mess
+
+">
+    <meta name="keywords" content="machine learning, data preparation, 0-1, normalization, explanations">
+    
+    	<!-- Twitter Cards -->
+	<meta name="twitter:title" content="Why Should I Normalize My Data?">
+	<meta name="twitter:description" content="work in progress, parden my mess
+
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:image" content="http://localhost:4000/images/north.jpg">
+	
+	<!-- Open Graph -->
+	<meta property="og:locale" content="en">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="Why Should I Normalize My Data?">
+	<meta property="og:description" content="work in progress, parden my mess
+
+">
+	<meta property="og:url" content="http://localhost:4000/devlogs/why-should-i-normalize-my-data/">
+	<meta property="og:site_name" content="Trevor Sullivan">
+
+    <link rel="canonical" href="http://localhost:4000/devlogs/why-should-i-normalize-my-data/">
+
+    <link href="http://localhost:4000/atom.xml" type="application/atom+xml" rel="alternate" title="Trevor Sullivan Atom Feed">
+    <link href="http://localhost:4000/sitemap.xml" type="application/xml" rel="sitemap" title="Sitemap">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="cleartype" content="on">
+
+    <link rel="stylesheet" href="http://localhost:4000/css/main.css">
+    <!-- HTML5 Shiv and Media Query Support for IE -->
+    <!--[if lt IE 9]>
+      <script src="http://localhost:4000/js/vendor/html5shiv.min.js"></script>
+      <script src="http://localhost:4000/js/vendor/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body id="js-body">
+    <!--[if lt IE 9]><div class="upgrade notice-warning"><strong>Your browser is quite old!</strong> Why not <a href="http://whatbrowser.org/">upgrade to a newer one</a> to better enjoy this site?</div><![endif]-->
+
+    <header id="masthead">
+  <div class="inner-wrap">
+    <a href="http://localhost:4000/" class="site-title">Trevor Sullivan</a>
+    <nav role="navigation" class="menu top-menu">
+        <ul class="menu-item">
+	<li class="home"><a href="/">Trevor Sullivan</a></li>
+	
+    
+    <li><a href="http://localhost:4000/about/" >About</a></li>
+  
+    
+    <li><a href="http://localhost:4000/devlogs/" >DevLog</a></li>
+  
+    
+    <li><a href="http://localhost:4000/blog/" >Personal Blog</a></li>
+  
+    
+    <li><a href="http://localhost:4000/creativewriting/" >Creative Writing</a></li>
+  
+</ul>
+    </nav>
+  </div><!-- /.inner-wrap -->
+</header><!-- /.masthead -->
+    <nav role="navigation" id="js-menu" class="sliding-menu-content">
+  <h5>Trevor Sullivan <span>Table of Contents</span></h5>
+  <ul class="menu-item">
+    <li>
+      <a href="http://localhost:4000/about/">
+        <img src="http://localhost:4000/images/profile1small.jpg" alt="teaser" class="teaser">
+        <div class="title">About</div>
+        
+      </a>
+    </li><li>
+      <a href="http://localhost:4000/devlogs/">
+        <img src="http://localhost:4000/images/binary-code.jpg" alt="teaser" class="teaser">
+        <div class="title">DevLog</div>
+        <p class="excerpt">Writings concerning current projects.</p>
+      </a>
+    </li><li>
+      <a href="http://localhost:4000/blog/">
+        <img src="http://localhost:4000/images/paintedsmall.jpg" alt="teaser" class="teaser">
+        <div class="title">Personal Blog</div>
+        <p class="excerpt">Blog posts, informational pieces, and opinions.</p>
+      </a>
+    </li><li>
+      <a href="http://localhost:4000/creativewriting/">
+        <img src="http://localhost:4000/images/catdesert.jpg" alt="teaser" class="teaser">
+        <div class="title">Creative Writing</div>
+        
+      </a>
+    </li>
+  </ul>
+</nav>
+<button type="button" id="js-menu-trigger" class="sliding-menu-button lines-button x2" role="button" aria-label="Toggle Navigation">
+  <span class="nav-lines"></span>
+</button>
+
+<div id="js-menu-screen" class="menu-screen"></div>
+
+
+    <div id="page-wrapper">
+      <div id="main" role="main">
+	<article class="wrap" itemscope itemtype="http://schema.org/Article">
+		
+		<div class="page-feature">
+			<div class="page-image">
+				<img src="http://localhost:4000/images/north.jpg" class="page-feature-image" alt="Why Should I Normalize My Data?" itemprop="image">
+				
+			</div><!-- /.page-image -->
+		</div><!-- /.page-feature -->
+		
+		
+  <nav class="breadcrumbs">
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="http://localhost:4000" itemprop="url">
+        <span itemprop="title">Home</span>
+      </a> › 
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="http://localhost:4000/devlogs/" itemprop="url">
+        <span itemprop="title">Devlogs</span>
+      </a>
+    </span>
+  </nav><!-- /.breadcrumbs -->
+
+		<div class="page-title">
+			<h1>Why Should I Normalize My Data?</h1>
+		</div>
+		<div class="inner-wrap">
+			<div id="content" class="page-content" itemprop="articleBody">
+				<p>work in progress, parden my mess</p>
+
+<h3 id="what-is-data-normalization">What is data normalization?</h3>
+
+<p>To begin with, we have a potential for confusion. Mathematicians, ever so good at naming things, use this word to describe three very different unrelated operations. This has caused me confusion in the past, so I wanted to lay it all down.</p>
+
+<h4 id="vector-normalization">1: Vector Normalization</h4>
+
+<p>Vector normalization is my favorite of the three because it has a regular name that is used to distinguish it from the other two, so I will dwell on it the least. Lots of computer programming applications will require a handling of vectors, one-dimensional matrices of values referring to a single element. This is visualized in the context of a physics vector, a thing in the real world that has motion in some number of dimensions, but it could be anything. You might have a vector with the number of people in your company in one dimension, and the size of the front door on another. You probably won’t learn from those values, but you can.</p>
+
+<p>If a correllation exists between values on two dimensions, it is usually fair to assume that it does not depend on magnitude. Let’s say that there exists a correllatin betwen door size and number of employees. You don’t care about the particular size of each data point, that’s just noise and a waste of resources. What you want is the relationship between them, which is encapsulated in the <em>direction</em> that your vector is pointing. Not on its size.</p>
+
+<p><img src="http://localhost:4000/images/devlogs/cosines.gif" alt="Vector diagram" /></p>
+
+<p>In this diagram, we don’t care about u. What we want to learn about are α, β, and γ. Working with angles is literally hell, so we use <em>unit vectors</em>, vectors with a magnitude of 1 as a proxy. Normalization is transforming a vector to have magnitude 1 while maintaining its original directionality.</p>
+
+<p>When you want to capture relationships between dimensions, rather than between data points, this is the way to go. But it’s not what we’re talking about here.</p>
+
+<h4 id="proportional-normalization">2. Proportional Normalization</h4>
+
+<p>Some machine learning methods and algorithms require inputs or (more often) initial parameters to have a probability distribution. i.e., when taken together, they must sum to 1. Why this is necessary may be algorithm or implementation specific.</p>
+
+<p>For example, at every point in its life, every transition vector and every emission vector in a Hidden Markov Model must sum to 1, because it is a probabilistic machine.</p>
+
+<p><img src="http://localhost:4000/images/devlogs/hmm.png" alt="My thanks to Evan Wallace" /></p>
+
+<p>The calculation of this value is pretty simple.</p>
+
+<div>
+\begin{equation}
+	norm(x_{n}) = \frac{x_{n}}{\sum_{N} x_{n}}
+\end{equation}
+</div>
+
+<p>Tadaa, you have a probability distribution.</p>
+
+<hr />
+
+<p>Note that most implementations will actually do this for you. For example, the following two matlab snippets produce identical results.</p>
+
+<p>```matlab
+tr = [4 5 2 4;
+      0 3 10 2;
+      6 5 3 1;
+      0 0 2 13];</p>
+
+<p>hmmdecode(some_string, tr)
+```</p>
+
+<p>```matlab
+tr = [.26 .33 .13 .26;
+      0   .2  .66 .13;
+      .4  .33 .2  .07;
+      0   0   .13 .87];</p>
+
+<p>hmmdecode(some_string, tr)
+```</p>
+
+<p>Because the Matlab HMM module automaticaly normalizes the data in the matrices it’s given. You generally don’t have to do this unless you’re working on a low-level implementation of one of these algorithms.</p>
+
+<h4 id="data-normalization">3. Data Normalization</h4>
+
+<p>Also sometimes called 0-1 normalization, but don’t confuse it with the above, where you generate a 0-1 probability distribution. The difference is that, even though this type of normalization generates values between 0 and 1, but they do not sum to 1.</p>
+
+
+				<hr />
+				<footer class="page-footer">
+					
+
+<div class="author-image">
+	<img src="http://localhost:4000/images/profile1small.jpg" alt="Trevor Sullivan">
+</div><!-- ./author-image -->
+<div class="author-content">
+	<h3 class="author-name" >Written by <a href="http://trevortds.github.io" itemprop="author">Trevor Sullivan</a></h3>
+	<p class="author-bio">Trevor is a student of human language technology at the University of Arizona. 
+</p>
+</div><!-- ./author-content -->
+					<div class="inline-btn">
+	<a class="btn-social twitter" href="https://twitter.com/intent/tweet?text=Why%20Should%20I%20Normalize%20My%20Data?&amp;url=http://localhost:4000/devlogs/why-should-i-normalize-my-data/&amp;via=" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> Share on Twitter</a>
+	<a class="btn-social facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/devlogs/why-should-i-normalize-my-data/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i> Share on Facebook</a>
+	<a class="btn-social google-plus"  href="https://plus.google.com/share?url=http://localhost:4000/devlogs/why-should-i-normalize-my-data/" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i> Share on Google+</a>
+</div><!-- /.share-this -->
+
+					<div class="page-meta">
+	<p>Updated <time datetime="2016-09-19T13:41:54Z" itemprop="datePublished">September 19, 2016</time></p>
+</div><!-- /.page-meta -->
+				</footer><!-- /.footer -->
+				<aside>
+					
+				</aside>
+			</div><!-- /.content -->
+		</div><!-- /.inner-wrap -->
+		
+	</article><!-- ./wrap -->
+</div><!-- /#main -->
+
+      <footer role="contentinfo" id="site-footer">
+	<nav role="navigation" class="menu bottom-menu">
+		<ul class="menu-item">
+		
+      
+			<li><a href="http://localhost:4000/" >Home</a></li>
+		
+		</ul>
+	</nav><!-- /.bottom-menu -->
+	<p class="copyright">&#169; 2017 <a href="http://localhost:4000">Trevor Sullivan</a> powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> + <a href="http://mmistakes.github.io/skinny-bones-jekyll/" rel="nofollow">Skinny Bones</a>.</p>
+</footer>
+    </div>
+
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="http://localhost:4000/js/vendor/jquery-1.9.1.min.js"></script>
+    <script src="http://localhost:4000/js/main.js"></script>
+
+  </body>
+
+</html>

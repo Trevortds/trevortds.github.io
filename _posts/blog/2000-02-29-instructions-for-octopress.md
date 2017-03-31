@@ -18,6 +18,8 @@ To launch site.
 
 To make a new post: 
 
+Try adding `bundle exec` if this doesn't work
+
     octopress new post "Instructions for Octopress" --dir blog --template media
 
 Default dir is _posts/ default template is article. 

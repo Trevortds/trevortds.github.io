@@ -8,7 +8,7 @@
 </subtitle>
   <link href="http://localhost:4000/atom.xml" rel="self"/>
   <link href="http://localhost:4000/" rel="alternate" type="text/html"/>
-  <updated>2016-03-16T11:25:58-07:00</updated>
+  <updated>2017-03-31T13:43:10-07:00</updated>
   <id>http://localhost:4000/</id>
   <author>
     <name>Trevor Sullivan</name>
@@ -16,6 +16,1080 @@
     <email>Trevortds@gmail.com</email>
   </author>
 
+  
+  <entry>
+    <title>Introduction to Crypto: Caesar</title>
+    <link href="http://localhost:4000/devlogs/introduction-to-crypto-caesar/"/>
+    <updated>2016-12-29T13:27:09-07:00</updated>
+    <id>http://localhost:4000/devlogs/introduction-to-crypto-caesar</id>
+    <author>
+      <name>Trevor Sullivan</name>
+      <uri>http://localhost:4000/</uri>
+      <email>Trevortds@gmail.com</email>
+    </author>
+    <content type="html">
+      &lt;img src=&quot;http://localhost:4000/images/north.jpg&quot;&gt;&lt;br/&gt;
+      &lt;p&gt;This is the first of a short series on cryptographic methods and their history, for no other reason than that I really like cryptography.&lt;/p&gt;
+
+&lt;p&gt;Cryptography is the art of concealing information in plain sight. Cryptography is subdivided into two main types. &lt;strong&gt;Codes&lt;/strong&gt; and &lt;strong&gt;Ciphers&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Codes&lt;/strong&gt; are the bread and butter of &lt;em&gt;semantic cryptography&lt;/em&gt;. What is &lt;em&gt;encoded&lt;/em&gt; (note, not &lt;em&gt;encrypted&lt;/em&gt;), is the meaning of the message, not the message itself. The following is an encoded message.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The Eagle has left the Nest, repeat, the Eagle has left the Nest, over.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;This is Yorkshire Terrier, I’m on my way to The Library to check out Three Books.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;You have probably noticed that the message itself is plain to see, but the details of it are obscured by &lt;em&gt;codewords&lt;/em&gt;. Unlike encipherment, encoding is immediate, baked into the message. This makes it fast, perfect for short-wave radio communication, like what you were imagining in your head reading the above. Coding is interesting in its own right, but it’s not what this series is about.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Ciphers&lt;/strong&gt; are methods used in &lt;em&gt;textual cryptography&lt;/em&gt;, which is what we aim to explore. The thing that is &lt;em&gt;encrypted&lt;/em&gt; is the message itself, rather than its content. The following is an encrypted message.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Htslwfyzqfyntsxdtzajzsufhpjiymjxjhwjyrjxxflj.Ltrfpjdtzwxjqkflttixfsibnyhmfxfbjqqijxjwajiwjbfwi&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;You can’t even begin to guess what this one means, but by the time you hit the bottom of this page, you’ll know where to start.&lt;/p&gt;
+
+&lt;p&gt;But before we begin, let me introduce the cast&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;dramatis-personae&quot;&gt;Dramatis Personae&lt;/h2&gt;
+
+&lt;p&gt;Before we begin, as part of the time-honored tradition of cryptography, we need to establish some characters who are going to be sending secret messages.&lt;/p&gt;
+
+&lt;h4 id=&quot;alice&quot;&gt;Alice&lt;/h4&gt;
+
+&lt;p&gt;Alice is a field agent of the Fingian rebels, deep undercover in the heart of the Thangor Empire. Her public face is as a reporter, to the limited extent that reporters exist amidst the oppressive regime, but it still allows her a small degree of additional freedom of movement, which is all she really needs.&lt;/p&gt;
+
+&lt;h4 id=&quot;bob&quot;&gt;Bob&lt;/h4&gt;
+
+&lt;p&gt;Bob is Alice’s handler back at the secret rebel base far in the outskirts of the empire. Bob needs to be able to receive and understand Alice’s messages so that the Rebels can avoid Thangorian crackdowns, and strike the Imperial Forces where they are weakest.&lt;/p&gt;
+
+&lt;h4 id=&quot;eve&quot;&gt;Eve&lt;/h4&gt;
+
+&lt;p&gt;Eve is Alice’s roommate. She has no particular love for the Empire, but she is loyal nonetheless, and more than a bit nosy. As a good citizen, she is encouraged to spy on her neighbors by the government, and she often eavesdrops on Alice’s outbound mail. If Eve discovers the nature of Alice’s messages, she will report her to the authorities, and all will be lost.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;the-caesar-cipher&quot;&gt;The Caesar Cipher&lt;/h2&gt;
+
+&lt;p&gt;Alice needs to send a message to Bob, but she does not want Eve to be able to read it. One of the oldest and most often cited methods for this task is the Caesar Cipher.&lt;/p&gt;
+
+&lt;p&gt;The Caesar Cipher is very simple. If you are like me, you probably played with it as a child with one of these “decoder rings”, that were often found as prizes in cereal boxes.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/images/devlogs/decoderring.jpg&quot; alt=&quot;Decoder Ring from the 30s&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;All you have to do is shift the alphabet. Augustus Caesar used a shift of 1 in his military dispatches, so A becomes B, B becomes C, C becomes D, and so on. Julius Caesar, who is credited with inventing the cipher (though there is evidence it predates him) used a shift of 4.&lt;/p&gt;
+
+&lt;p&gt;Here is my implementation of the shift.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;python
+alphabet = [&#39;a&#39;,&#39;b&#39;,&#39;c&#39;,&#39;d&#39;,&#39;e&#39;,&#39;f&#39;,&#39;g&#39;,&#39;h&#39;,&#39;i&#39;,&#39;j&#39;,&#39;k&#39;,&#39;l&#39;,&#39;m&#39;,&#39;n&#39;,&#39;o&#39;,&#39;p&#39;,
+            &#39;q&#39;,&#39;r&#39;,&#39;s&#39;,&#39;t&#39;,&#39;u&#39;,&#39;v&#39;,&#39;w&#39;,&#39;x&#39;,&#39;y&#39;,&#39;z&#39;]
+def rotate(alphabet, key):
+    key = key % len(alphabet) # in case the key is 27 or higher for some reason
+    return alphabet[key:] + alphabet[:key]
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Simple enough, right? Let’s see what Augustus’s rotation looked like.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;python
+In [1]: rotate(alphabet, 1)
+Out[1]: 
+[&#39;b&#39;,&#39;c&#39;,&#39;d&#39;,&#39;e&#39;,&#39;f&#39;,&#39;g&#39;,&#39;h&#39;,&#39;i&#39;,&#39;j&#39;,&#39;k&#39;,&#39;l&#39;,&#39;m&#39;,&#39;n&#39;,&#39;o&#39;,&#39;p&#39;,&#39;q&#39;,&#39;r&#39;,&#39;s&#39;,&#39;t&#39;,
+ &#39;u&#39;,&#39;v&#39;,&#39;w&#39;,&#39;x&#39;,&#39;y&#39;,&#39;z&#39;,&#39;a&#39;]
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The encryption method is as follows.&lt;/p&gt;
+
+&lt;p&gt;```python
+def encrypt(plaintext, key):
+    ciphertext = “”
+    alpharotation = rotate(alphabet, key)
+    plaintext = plaintext.lower()&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;for char in plaintext:
+    if char in alphabet:
+        ciphertext += alpharotation[alphabet.index(char)]
+    else:
+        ciphertext += char # leave punctuation and spaces as is
+
+return ciphertext ```
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Most of this is preparation and edge cases (characters in the message not in the alphabet, etc), the core element is this loop.&lt;/p&gt;
+
+&lt;p&gt;```python
+    alpharotation = rotate(alphabet, key)&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;for char in plaintext:
+    ciphertext += alpharotation[alphabet.index(char)] ```
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Note that the central piece of the encryption process is to replace each character in the plaintext with a single ciphertext character, dependent only on the plaintext character itself. That’s why this technique is the prime example of a class of ciphers known as &lt;strong&gt;Single Substitution Ciphers&lt;/strong&gt;. Every character is replaced by exactly one other character.&lt;/p&gt;
+
+&lt;p&gt;Other single substitution ciphers may involve performing scrambles other than rotations to the alphabet, or changing to another alphabet entirely (as in Pigpen or Numeric Caesar), but they all function in fundamentally the same way, and share the same weaknesses.&lt;/p&gt;
+
+&lt;p&gt;But I digress, let me run this code for you and see how it works.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;python
+In [2]: encrypt(&quot;this is a secret message&quot;, 1)
+Out[2]: &#39;uijt jt b tfdsfu nfttbhf&#39;
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The decryption scheme is simply to do the same thing in the other direction.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;python
+def decrypt(ciphertext, key):
+    return encrypt(ciphertext, len(alphabet)-key)
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;There is an interesting consequence here. Since the decryption is simply encrypting with &lt;code class=&quot;highlighter-rouge&quot;&gt;26 - key&lt;/code&gt; as the key, whenever the number of letters in the alphabet is even, there is a symmetric scheme halfway through. This is why Caesar with a shift of 13, or &lt;strong&gt;ROT13&lt;/strong&gt; is commonly used for encrypting and decrypting quickly, it’s the same procedure both ways.&lt;/p&gt;
+
+&lt;p&gt;```python
+In [3]: rotate(alphabet, 13)
+Out[3]: 
+[‘n’,’o’,’p’,’q’,’r’,’s’,’t’,’u’,’v’,’w’,’x’,’y’,’z’,
+ ‘a’,’b’,’c’,’d’,’e’,’f’,’g’,’h’,’i’,’j’,’k’,’l’,’m’]&lt;/p&gt;
+
+&lt;p&gt;In [4]: encrypt(“this is a secret message”,13)
+Out[4]: ‘guvf vf n frperg zrffntr’&lt;/p&gt;
+
+&lt;p&gt;In [5]: encrypt(“guvf vf n frperg zrffntr”,13)
+Out[5]: ‘this is a secret message’&lt;/p&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;h2 id=&quot;weakness-frequency-analysis&quot;&gt;Weakness: Frequency Analysis&lt;/h2&gt;
+
+&lt;p&gt;This scheme is effective for a certain amount of time, but eventually, Eve’s curiosity gets the best of her. She takes a piece of Alice’s outbound mail, and sees this.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;‘p zhd aoyll aybjrz vu aolpy dhf vba vm aol jhwpahs shklu dpao zvskplyz, zvtl vm aolt dlyl ahsrpun hivba nvukvszilyn. fvb thf il hisl av jhajo aolt vu aol yvhk’&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Eve knows a little bit about language, and she knows that some letters appear more often than others. She checks the frequency of the letters in the ciphertext.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&#39;l&#39;: 15,
+&#39;a&#39;: 14,
+&#39;v&#39;: 13,
+&#39;h&#39;: 11,
+&#39;o&#39;: 8,
+&#39;y&#39;: 7,
+&#39;s&#39;: 6,
+&#39;z&#39;: 6,
+&#39;p&#39;: 6,
+&#39;u&#39;: 5,
+&#39;i&#39;: 4,
+&#39;j&#39;: 4,
+&#39;k&#39;: 4,
+&#39;d&#39;: 4,
+&#39;b&#39;: 4,
+&#39;t&#39;: 4,
+&#39;n&#39;: 3,
+&#39;f&#39;: 3,
+&#39;m&#39;: 2,
+&#39;r&#39;: 2,
+&#39;w&#39;: 1,
+&#39;q&#39;: 0,
+&#39;g&#39;: 0,
+&#39;x&#39;: 0,
+&#39;e&#39;: 0,
+&#39;c&#39;: 0,
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The four most common letters in English by far are ‘e’, ‘t’, ‘o’, and ‘a’. Eve guesses that these are the top four letters in the message.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+   a  t  ee t      o  t e    a  o t o  t e  a  ta   a e    t   o   e     o e
+p zhd aoyll aybjrz vu aolpy dhf vba vm aol jhwpahs shklu dpao zvskplyz, zvtl
+o  t e   e e ta      a o t  o  o   e     o   a   e a  e to  at   t e  o  t e
+vm aolt dlyl ahsrpun hivba nvukvszilyn. fvb thf il hisl av jhajo aolt vu aol
+ oa 
+yvhk&#39;
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Since this is a short message, frequencies other than the top ones can’t be relied on too heavily, but some of these seem to make sense. “ee” is a common sequence, which is encouraging. She tries to substitute &lt;code class=&quot;highlighter-rouge&quot;&gt;o&lt;/code&gt; for the next most common letter, ‘n’. This is a stretch, but it might work.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+   a  tn ee t      o  tne    a  o t o  tne  a  ta   a e    tn  o   e     o e
+p zhd aoyll aybjrz vu aolpy dhf vba vm aol jhwpahs shklu dpao zvskplyz, zvtl
+o  tne   e e ta      a o t  o  o   e     o   a   e a  e to  at n tne  o  tne
+vm aolt dlyl ahsrpun hivba nvukvszilyn. fvb thf il hisl av jhajo aolt vu aol
+ oa 
+yvhk&#39;
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;This doesn’t seem to improve things. The sequence “tne” appears five times, and this is practically unheard of in English. But there is another letter that appears in that position very often: ‘h’&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+   a  th ee t      o  the    a  o t o  the  a  ta   a e    th  o   e     o e
+p zhd aoyll aybjrz vu aolpy dhf vba vm aol jhwpahs shklu dpao zvskplyz, zvtl
+o  the   e e ta      a o t  o  o   e     o   a   e a  e to  at h the  o  the
+vm aolt dlyl ahsrpun hivba nvukvszilyn. fvb thf il hisl av jhajo aolt vu aol
+ oa 
+yvhk&#39;
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Based on this she can make some more guesses. What if the third word is “three”?&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+   a  three tr     o  the r  a  o t o  the  a  ta   a e    th  o   er    o e
+p zhd aoyll aybjrz vu aolpy dhf vba vm aol jhwpahs shklu dpao zvskplyz, zvtl
+o  the   ere ta      a o t  o  o   er    o   a   e a  e to  at h the  o  the
+vm aolt dlyl ahsrpun hivba nvukvszilyn. fvb thf il hisl av jhajo aolt vu aol
+roa 
+yvhk&#39;
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The third word in the second line could be “here” or “were”, but we already think that &lt;code class=&quot;highlighter-rouge&quot;&gt;o&lt;/code&gt; represents ‘h’, so we guess that &lt;code class=&quot;highlighter-rouge&quot;&gt;d&lt;/code&gt; is ‘w’&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+   aw three tr     o  the r wa  o t o  the  a  ta   a e  w th  o   er    o e
+p zhd aoyll aybjrz vu aolpy dhf vba vm aol jhwpahs shklu dpao zvskplyz, zvtl
+o  the  were ta      a o t  o  o   er    o   a   e a  e to  at h the  o  the
+vm aolt dlyl ahsrpun hivba nvukvszilyn. fvb thf il hisl av jhajo aolt vu aol
+roa 
+yvhk&#39;
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Now that second word, there’s only one reasonable possibility, it must be “saw”&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Notice how each guess gives you more clues that lead to more cascading guesses in other places?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+  saw three tr   s o  the r wa  o t o  the  a  ta   a e  w th so   ers  so e
+p zhd aoyll aybjrz vu aolpy dhf vba vm aol jhwpahs shklu dpao zvskplyz, zvtl
+o  the  were ta      a o t  o  o s er    o   a   e a  e to  at h the  o  the
+vm aolt dlyl ahsrpun hivba nvukvszilyn. fvb thf il hisl av jhajo aolt vu aol
+roa 
+yvhk&#39;
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The rest falls in very quickly as you fill the gaps. At this point, Eve could continue as before and keep guessing individual letters based on patterns.&lt;/p&gt;
+
+&lt;p&gt;Or, if she believe that she’s dealing with a Caesar cipher, she can guess the key: there is only one Caesar rotation that maps ‘t’ to &lt;code class=&quot;highlighter-rouge&quot;&gt;a&lt;/code&gt; and ‘e’ to &lt;code class=&quot;highlighter-rouge&quot;&gt;l&lt;/code&gt;. Checking against a table of Caesar rotations will quickly give Eve the key, at which point cracking the rest is trivial.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+i saw three trucks on their way out of the capital laden with soldiers  some
+p zhd aoyll aybjrz vu aolpy dhf vba vm aol jhwpahs shklu dpao zvskplyz, zvtl
+of them were talking about gondolsberg  you may be able to catch them on the
+vm aolt dlyl ahsrpun hivba nvukvszilyn. fvb thf il hisl av jhajo aolt vu aol
+road
+yvhk&#39;
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The reply from Bob is left as an exercise to the reader.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&#39;leuvijkffu rxvek rcztv kyviv riv ivsvc xlvizccrj fe kyvzi nrp kf zekvitvgk. nvcc ufev. r evn zewfidrek nveup yrj druv tfekrtk nzky lj, dvvk yvi rk 1700 ze kyv jhlriv kfdfiifn&#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Next time, an extension of Caesar, &lt;strong&gt;The Vignere Cipher&lt;/strong&gt;&lt;/p&gt;
+
+    </content>
+  </entry>
+  
+  <entry>
+    <title>Why Should I Normalize My Data?</title>
+    <link href="http://localhost:4000/devlogs/why-should-i-normalize-my-data/"/>
+    <updated>2016-09-19T13:41:54-07:00</updated>
+    <id>http://localhost:4000/devlogs/why-should-i-normalize-my-data</id>
+    <author>
+      <name>Trevor Sullivan</name>
+      <uri>http://localhost:4000/</uri>
+      <email>Trevortds@gmail.com</email>
+    </author>
+    <content type="html">
+      &lt;img src=&quot;http://localhost:4000/images/north.jpg&quot;&gt;&lt;br/&gt;
+      &lt;p&gt;work in progress, parden my mess&lt;/p&gt;
+
+&lt;h3 id=&quot;what-is-data-normalization&quot;&gt;What is data normalization?&lt;/h3&gt;
+
+&lt;p&gt;To begin with, we have a potential for confusion. Mathematicians, ever so good at naming things, use this word to describe three very different unrelated operations. This has caused me confusion in the past, so I wanted to lay it all down.&lt;/p&gt;
+
+&lt;h4 id=&quot;vector-normalization&quot;&gt;1: Vector Normalization&lt;/h4&gt;
+
+&lt;p&gt;Vector normalization is my favorite of the three because it has a regular name that is used to distinguish it from the other two, so I will dwell on it the least. Lots of computer programming applications will require a handling of vectors, one-dimensional matrices of values referring to a single element. This is visualized in the context of a physics vector, a thing in the real world that has motion in some number of dimensions, but it could be anything. You might have a vector with the number of people in your company in one dimension, and the size of the front door on another. You probably won’t learn from those values, but you can.&lt;/p&gt;
+
+&lt;p&gt;If a correllation exists between values on two dimensions, it is usually fair to assume that it does not depend on magnitude. Let’s say that there exists a correllatin betwen door size and number of employees. You don’t care about the particular size of each data point, that’s just noise and a waste of resources. What you want is the relationship between them, which is encapsulated in the &lt;em&gt;direction&lt;/em&gt; that your vector is pointing. Not on its size.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/images/devlogs/cosines.gif&quot; alt=&quot;Vector diagram&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In this diagram, we don’t care about u. What we want to learn about are α, β, and γ. Working with angles is literally hell, so we use &lt;em&gt;unit vectors&lt;/em&gt;, vectors with a magnitude of 1 as a proxy. Normalization is transforming a vector to have magnitude 1 while maintaining its original directionality.&lt;/p&gt;
+
+&lt;p&gt;When you want to capture relationships between dimensions, rather than between data points, this is the way to go. But it’s not what we’re talking about here.&lt;/p&gt;
+
+&lt;h4 id=&quot;proportional-normalization&quot;&gt;2. Proportional Normalization&lt;/h4&gt;
+
+&lt;p&gt;Some machine learning methods and algorithms require inputs or (more often) initial parameters to have a probability distribution. i.e., when taken together, they must sum to 1. Why this is necessary may be algorithm or implementation specific.&lt;/p&gt;
+
+&lt;p&gt;For example, at every point in its life, every transition vector and every emission vector in a Hidden Markov Model must sum to 1, because it is a probabilistic machine.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/images/devlogs/hmm.png&quot; alt=&quot;My thanks to Evan Wallace&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The calculation of this value is pretty simple.&lt;/p&gt;
+
+&lt;div&gt;
+\begin{equation}
+	norm(x_{n}) = \frac{x_{n}}{\sum_{N} x_{n}}
+\end{equation}
+&lt;/div&gt;
+
+&lt;p&gt;Tadaa, you have a probability distribution.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Note that most implementations will actually do this for you. For example, the following two matlab snippets produce identical results.&lt;/p&gt;
+
+&lt;p&gt;```matlab
+tr = [4 5 2 4;
+      0 3 10 2;
+      6 5 3 1;
+      0 0 2 13];&lt;/p&gt;
+
+&lt;p&gt;hmmdecode(some_string, tr)
+```&lt;/p&gt;
+
+&lt;p&gt;```matlab
+tr = [.26 .33 .13 .26;
+      0   .2  .66 .13;
+      .4  .33 .2  .07;
+      0   0   .13 .87];&lt;/p&gt;
+
+&lt;p&gt;hmmdecode(some_string, tr)
+```&lt;/p&gt;
+
+&lt;p&gt;Because the Matlab HMM module automaticaly normalizes the data in the matrices it’s given. You generally don’t have to do this unless you’re working on a low-level implementation of one of these algorithms.&lt;/p&gt;
+
+&lt;h4 id=&quot;data-normalization&quot;&gt;3. Data Normalization&lt;/h4&gt;
+
+&lt;p&gt;Also sometimes called 0-1 normalization, but don’t confuse it with the above, where you generate a 0-1 probability distribution. The difference is that, even though this type of normalization generates values between 0 and 1, but they do not sum to 1.&lt;/p&gt;
+
+
+    </content>
+  </entry>
+  
+  <entry>
+    <title>Focus</title>
+    <link href="http://localhost:4000/blog/focus/"/>
+    <updated>2016-07-18T17:36:25-07:00</updated>
+    <id>http://localhost:4000/blog/focus</id>
+    <author>
+      <name>Trevor Sullivan</name>
+      <uri>http://localhost:4000/</uri>
+      <email>Trevortds@gmail.com</email>
+    </author>
+    <content type="html">
+      &lt;img src=&quot;http://localhost:4000/images/Focus2.jpg&quot;&gt;&lt;br/&gt;
+      &lt;p&gt;Focus.&lt;/p&gt;
+
+&lt;p&gt;Focus is the topic of discussion, the new information, whatever thing it is that we happen to be talking about right now. For the purposes of many of these sentences, the focus is Focus.&lt;/p&gt;
+
+&lt;p&gt;This is something that a lot of people seem to not understand. And I can’t understand why not; after all, it’s baked into our brains as a part of universal grammar, something that every person has by virtue of being human and having language.
+Focus is not exclusivity.&lt;/p&gt;
+
+&lt;p&gt;When I choose to focus on Focus, it does not mean that I do not think any other grammatical unit, like topic, subject, main verb, object, modal verb, or whatever, is unimportant or unworthy of discussion. It does not even mean that it’s my favorite. I happen to think that all of those are just as interesting and important. What it means is that it is the one I’m talking about right now.&lt;/p&gt;
+
+&lt;p&gt;What I am doing is not excluding all other grammatical functions. I am merely focusing on one out of many in this particular discussion.
+Let’s look at some real-life examples of Focus in action.&lt;/p&gt;
+
+&lt;p&gt;‪# #‎BlackLivesMatter‬&lt;/p&gt;
+
+&lt;p&gt;“Black”, or if you prefer, “Black Lives”, are in Focus. When I tweet #BlackLivesMatter, it does not come with an implicit “other lives don’t”, because Focus is not exclusivity. When you see someone use the BLM tag or emblem, it is because they are putting “Black Lives”, in Focus, making them the topic of discussion.&lt;/p&gt;
+
+&lt;p&gt;The question you should ask yourself therefore is not, “why don’t they care about other lives?” because it is not implied or otherwise indicated that that is the case. The question you should ask yourself is, “Why do they want to bring attention to Black Lives?” And there you might learn something.&lt;/p&gt;
+
+&lt;p&gt;How about another?&lt;/p&gt;
+
+&lt;p&gt;‪# #‎Feminism‬&lt;/p&gt;
+
+&lt;p&gt;Now this is a single word for a movement, probably because it is older and people used to like to find a way to attach -isms to every movement, they don’t seem to do that as much these days. Nonetheless, what it effectively does is put women in Focus.&lt;/p&gt;
+
+&lt;p&gt;What it does not do, is put women above men, or ask for discussion of women’s issues to the exclusion of men’s issues. What it does is bring attention to something that deserves more attention than it gets, by putting it in Focus.&lt;/p&gt;
+
+&lt;p&gt;I support #BlackLivesMatter, and I am a feminist, not because I think that only black people are important or that only women have problems, but because I know that everyone is equally important, but they are not treated as such in America. By calling out Black people as mattering, I point out that in our system, they don’t.&lt;/p&gt;
+
+&lt;p&gt;When a white man kills another white man, they get labeled as insane, they are crucified in the media, everyone wonders what is wrong with their brains, and they almost always wind up in jail for the rest of their lives.&lt;/p&gt;
+
+&lt;p&gt;When a white man kills a black man, they get a paid vacation during an “investigation” that never comes back recommending indictment, meanwhile people raise hundreds of thousands of dollars in funds in support of the killer as the media dives into the murdered man’s criminal history to find out how many parking tickets he has, in an attempt to justify his death.&lt;/p&gt;
+
+&lt;p&gt;This is not an acceptable state of justice. This is why we need #BlackLivesMatter, to bring attention to injustice, to put problems that are ignored into Focus.&lt;/p&gt;
+
+&lt;p&gt;Yes, it is true that ‪#‎AllLivesMatter‬. It’s also true that ‪#‎WhiteLivesMatter‬ and ‪#‎AsianLivesMatter‬ and ‪#‎MiddleEastLivesMatter‬, but it is downright dishonest to think that those ideas are in opposition to #BlackLivesMatter. All you are doing is changing the Focus, changing the Focus to somewhere that it doesn’t belong.&lt;/p&gt;
+
+&lt;p&gt;Ultimately, the goal is for all lives to matter. That’s what everyone wants in the end. #BlackLivesMatter exists to point out that, in America today, it’s black lives that don’t.&lt;/p&gt;
+
+    </content>
+  </entry>
+  
+  <entry>
+    <title>A Tale of One and Three</title>
+    <link href="http://localhost:4000/creativewriting/a-tale-of-one-and-three/"/>
+    <updated>2016-05-29T00:00:00-07:00</updated>
+    <id>http://localhost:4000/creativewriting/a-tale-of-one-and-three</id>
+    <author>
+      <name>Trevor Sullivan</name>
+      <uri>http://localhost:4000/</uri>
+      <email>Trevortds@gmail.com</email>
+    </author>
+    <content type="html">
+      &lt;img src=&quot;http://localhost:4000/images/creativewriting/dark_alley.jpg&quot;&gt;&lt;br/&gt;
+      &lt;p&gt;Boy was I obsessed with classics when I wrote this so long ago. My teacher told me to get it published, but I didn’t feel like it was good. Well guess what! Now it is published! On a blog that nobody reads!&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;“You simply don’t have the evidence”&lt;/p&gt;
+
+&lt;p&gt;“I saw the woman, I’m telling you she ran when she saw him.”&lt;/p&gt;
+
+&lt;p&gt;The accused sat ‘cuffed to a bench on the opposite end of the
+room. He wore clothes typical of his kind, a long, black and
+tattered coat, boots that were without a doubt the wrong side
+for him, and a poor looking lopsided hat with a large hole in
+the left side.&lt;/p&gt;
+
+&lt;p&gt;“I’m sorry, but I can’t tell the judge that I heard from
+someone who heard from someone else that this man is dangerous.
+You realize that he will order the man released immediately.”&lt;/p&gt;
+
+&lt;p&gt;“Sir, I saw the look on her face, she witnessed a murder.”&lt;/p&gt;
+
+&lt;p&gt;“And you did not, that’s my problem. If there was a murder,
+where is the body?”&lt;/p&gt;
+
+&lt;p&gt;“I told you, I didn’t have time. If you would just send out a
+scouting team-”&lt;/p&gt;
+
+&lt;p&gt;“I don’t have the resources! You know how stretched our
+department is!”&lt;/p&gt;
+
+&lt;p&gt;Daniel stopped to think for a moment. He was an officer of the
+downtown district of New Tyre, A&amp;amp;E division. He was a rather
+short man, and was not as strong as most other officers, but
+knew more about anatomy and weapons use than any of them. He
+had short dark hair, and was rarely seen out of his well-used
+black uniform. Daniel loves helping people, and will gladly
+work day and night to benefit society. Today, however, the
+Chief is in his way.&lt;/p&gt;
+
+&lt;p&gt;“What if we charge him for something else?” he said, “Just to
+keep him here long enough for me to inspect the scene.”&lt;/p&gt;
+
+&lt;p&gt;The Chief thought a minute and replied, “The best I can do is
+charge him with a breach of the peace for the commotion in the
+street he caused. However, you certainly don’t have evidence
+enough to post bail over fifty dollars.”&lt;/p&gt;
+
+&lt;p&gt;The man furrowed his brow.&lt;/p&gt;
+
+&lt;p&gt;“You can’t go any higher?”&lt;/p&gt;
+
+&lt;p&gt;“I’m afraid not.”&lt;/p&gt;
+
+&lt;p&gt;This was beginning to irritate Daniel. “That man is a threat to
+the life of our citizens!”&lt;/p&gt;
+
+&lt;p&gt;“You haven’t shown me that.”&lt;/p&gt;
+
+&lt;p&gt;“You won’t let me!” he shouted. “That man killed someone
+today, and you’re going to let him go!”&lt;/p&gt;
+
+&lt;p&gt;“Because you only have secondhand evidence”&lt;/p&gt;
+
+&lt;p&gt;“It’s still evidence!”&lt;/p&gt;
+
+&lt;p&gt;“That’s enough!” the Chief said gruffly. He was in his
+forties, sitting behind his desk in a crisp, perfectly tailored
+blue uniform. His hair was neatly combed and his hands were
+folded neatly in his lap, he looked at Daniel like a nurse
+looks down on a misbehaving child. Their eyes remained locked
+for a moment, then the Chief turned to the man on the bench.
+“What is your name, sir?”&lt;/p&gt;
+
+&lt;p&gt;The man looked up darkly. “Daifotismenos.”&lt;/p&gt;
+
+&lt;p&gt;“Ah, I could’ve guessed.”&lt;/p&gt;
+
+&lt;p&gt;So this man was one of The Enlightened. Daniel clenched a fist.
+These people are low lifes. The leeches of society. They reject
+technology and the development of society. They only live in the
+city because there are more people to steal from. When Daniel is
+on the street he would catch or kill them on recognition. They
+are all criminals. Surely the Chief won’t let him go now.&lt;/p&gt;
+
+&lt;p&gt;The chief continued,“Do you have money enough to pay the bail?”&lt;/p&gt;
+
+&lt;p&gt;“Yes”, the man replied fearfully.&lt;/p&gt;
+
+&lt;p&gt;He was doing this to spite Daniel. It’s against the law to
+release an Enlightened from police custody. The Chief must be
+testing Daniel.&lt;/p&gt;
+
+&lt;p&gt;To Daniel’s surprise he stood up (a very rare occurrence) walked
+around the desk and over to the seated man. He stood in front of
+him a moment, and then extended his hand. The Enlightened man
+slowly, carefully reached into his coat pocket and pulled out a
+bundle of bills. Daniel couldn’t watch anymore.&lt;/p&gt;
+
+&lt;p&gt;“He stole that money!” he cried.&lt;/p&gt;
+
+&lt;p&gt;“Did someone on the street tell you that as well?” the Chief
+retorted.&lt;/p&gt;
+
+&lt;p&gt;Embarrassed and enraged, Daniel remained silent. The Chief took
+the money from the man with a quick movement, then reached into
+his pocket for a key. He moved to free the man. The cuff came
+free, and the man immediately leapt up and ran to the door. He
+went out onto the street without another word.&lt;/p&gt;
+
+&lt;p&gt;Daniel was enraged. “You can’t just let him go!” he shouted.&lt;/p&gt;
+
+&lt;p&gt;“You had no proof against him, I can’t keep him” the old man
+replied, with a smirk.&lt;/p&gt;
+
+&lt;p&gt;“He gave you proof. Every day for the last three years I’ve
+been on the street hunting men like him. They’re theives,
+murderers, they hold no respect for human life, and who knows
+what unholy rituals they perform nightly in their dens. You let
+him go!”&lt;/p&gt;
+
+&lt;p&gt;The man closed his eyes for a short moment. “They’re not all
+bad,” he replied.&lt;/p&gt;
+
+&lt;p&gt;Daniel resisted the urge to reach for my gun. “What makes you
+think that?” he asked.&lt;/p&gt;
+
+&lt;p&gt;The smirk was still on the Chief’s face. “Only sixty per cent of
+those executed are brought in for murder.”&lt;/p&gt;
+
+&lt;p&gt;Daniel was tired of this man. He always seems to be trying to
+prevent him from doing what he needs to do, simply to irritate
+him. The Chief is as devoted to their duty as Daniel is, but he
+never lets him do it. Daniel set my shoulders back, and slowly
+replied, “I swore to defend the law, and you are in my way.”&lt;/p&gt;
+
+&lt;p&gt;The Chief suddenly grinned. He’d gotten what he wanted from
+Daniel apparently. “I’m not keeping you from going after him.”&lt;/p&gt;
+
+&lt;p&gt;So that was it. He was trying to make the officer look cruel to
+this man. He wanted Daniel to be scorned, to be feared.&lt;/p&gt;
+
+&lt;p&gt;Daniel set his jaw, turned, and walked out the glass door onto a
+busy street. People were walking in both directions in great
+quantities, the road was full of cars. Behind him was a
+concrete staircase the leads up to the A&amp;amp;E division
+headquarters, a tower fifty stories tall. The exterior is
+composed completely of concrete and steel, one foot thick with
+no windows. The City Government spares no expense on outfitting
+its police force. For miles in each direction are nothing but
+tall buildings, most of them significantly larger than the
+concrete fortress. The street was a hallway of steel and glass.
+This was his domain.&lt;/p&gt;
+
+&lt;p&gt;The city is arranged in square blocks, some one hundred meters
+long. There are no alleyways, only building faces on all sides
+of each block. Daniel’s opponent would most likely run north,
+into the heart of the city, where his people lurk.&lt;/p&gt;
+
+&lt;p&gt;The crowd contained a multitude of people, some businessmen in
+suits headed to corporate meetings, low class labourers in
+thick, dirty clothes, and plenty of civilians on the street
+visiting shops and sightseeing. The faces of towers were on
+Daniel’s left, the street packed with taxis, busses, and
+privately owned vehicles on his right. He had no trouble moving
+through the thick crowd, they all moved out of his way.&lt;/p&gt;
+
+&lt;p&gt;That was the worst part of Daniel’s job. Everyone seemed to be
+afraid of him, many even hated him. They all quickly moved to
+avoid him. The men in suits nodded his way and moved aside. The
+workers in dirty, worn clothes bowed their heads and sidestepped
+around him, as if they were used to that sort of thing. The
+normal people just forced smiles and jumped towards the
+storefronts. Not a one looked in his eye, in fear of some
+unjust retribution.&lt;/p&gt;
+
+&lt;p&gt;Daniel always wondered why they always fear him as he increases
+his pace on the sidewalk. He only wants to protect them.
+Everyone who knew Daniel, really knew him, loved his
+personality, his lightheartedness, and his devotion to the good
+of everyone else. People on the street don’t want to know
+anyone, they just go their way, only wanting to help
+themselves. What is it about being in public that makes
+everyone else so cold?&lt;/p&gt;
+
+&lt;p&gt;Daniel turned his attention back to his target. When he left the
+office he saw the man run north and turn the first corner.
+Daniel had turned that corner as well, and the man he sought
+was two hundred feet ahead of him, shoving startled passerbys
+out of his way. He shouted at the man, and ran towards him.&lt;/p&gt;
+
+&lt;p&gt;The criminal looked over his shoulder. He appeared horrified.
+The look he gave Daniel was exactly what Daniel feared the
+most. He viewed Daniel as a torturer, an evil hunter in the
+night. Most other officers somehow take satisfaction from that
+terror, but Daniel abhors it. Then
+Daniel remembered the crimes that the low-life had committed,
+that this man fears him for the same reason that the wolf fears
+the hunter’s bow, and Daniel put on a burst of speed. The man
+redoubled his efforts to shoulder his way through the throng of
+people.&lt;/p&gt;
+
+&lt;p&gt;The outlaw had made it through the group that was waiting for
+the crosswalk to clear, and he ran into the street. Moments
+later, Daniel made it to the same place.&lt;/p&gt;
+
+&lt;p&gt;He could still see him, the murderer made an aisle of shocked
+men in women as he ran (if one could call pushing body after
+body aside “running”) down the sidewalk on the other side of
+the street. Unfortunately, the amount of traffic on the road
+seemed to have increased since the fugitive crossed. There was
+a clear line between Daniel and his quarry, but he dared not
+use his firearm in fear that some foolish man, distracted by
+his own thoughts, would come between them. The man turned a
+corner and was lost to Daniel’s sight&lt;/p&gt;
+
+&lt;p&gt;It felt like an eternity before the signal to walk lit up.
+Daniel dashed across the street, sprinted as quickly to the
+other end of the block, rounded the corner, and looked around
+for his prey.&lt;/p&gt;
+
+&lt;p&gt;He was nowhere in sight. The people did not look startled, or
+even distracted. They just kept walking their own way,
+distracted, looking out only for themselves. The businessmen on
+phones, workers in dirty overalls, and tourists in overly casual
+clothing walked widely around him in irrational fear. Brick,
+concrete, and steel on his left, the deceptively docile road on
+his right, Daniel stood rigid in his place, looking in vain for
+the object of his detest.&lt;/p&gt;
+
+&lt;p&gt;He ran to the end of the street, shouldering his way through the
+crowds, and then ran back, but the Diafotismenos was nowhere to
+be found. Susipicious once again, Daniel left the scene,
+promising himself to come back later.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Daniel peered through the window. He saw a well lit room inside,
+with a low, artfully crafted table in the center, and two
+rich-looking chairs at either end. The table had a bouquet in
+the center, but was otherwise empty. These sat on top of a
+thick, round rug that made the room look very small. Seeing
+noone inside, Daniel moved around the corner towards the door.&lt;/p&gt;
+
+&lt;p&gt;The door was made of wood, very uncommon even among buildings of
+this age, painted a dark green. It had an old fashioned round
+knob, plated with gold. Daniel carefully examined the
+doorframe, for he knew to be very careful around the
+Diafotismenos lairs. The frame was also wooden, with a classic
+trim pattern. Seeing no dangers or traps, he reached out and
+slowly turned the knob.&lt;/p&gt;
+
+&lt;p&gt;Daniel stepped into the room and was shocked by the warmth
+inside. He was tempted to take off his long trench coat that
+served as a disguise. There was a wood-burning stove in the
+corner opposite Daniel on the right, with a black pipe
+stretching into the ceiling and beyond. The scent of the
+burning wood was a welcome respite from the normal fumes of
+fuel and smoke in the streets. The wall on the left contained
+an additional fireplace, with a very old-looking brick mantle.
+Some artfully wrought iron fire-tending tools hung from a rack
+on the left of the fireplace.&lt;/p&gt;
+
+&lt;p&gt;Opposite the fireplace was the window Daniel got his first
+glimpse of the room through. Right under the window was a altar
+of sorts, with two tall candles and a gold filigree centerpiece.
+The design was very abstract, Daniel did not recognize it. On
+the face of the altar was some inscription in a Cyrillic
+script, there was no time to translate it.&lt;/p&gt;
+
+&lt;p&gt;It wasn’t until now that Daniel realized that this room only had
+one exit. The wall opposite the door was void of any decoration
+or furniture, and the space on the other four walls were taken
+up by the altar, the fireplace, and the door that Daniel came
+through. He reached across his body and slipped his gun from
+its holster, then quickly turned and opened the door, sensing
+some trickery on the part of his foes.&lt;/p&gt;
+
+&lt;p&gt;Daniel turned back into the building and began to search. He
+briskly walked into the back right corner, and knelt on the
+floor beside the iron stove. Seeing nothing under it, he darted
+across the room to the fireplace, examining the mantle and
+fireplace itself for some sort of trigger. It would be just
+like these crazy people to hide a passageway in a fireplace.
+Daniel ran his hand all the way around the edge of the stone
+structure, but found nothing. He went back to the center of the
+small room, and with some difficulty moved the chairs to examine
+the floor for some sort of trapdoor. He looked at the contents
+of the table, just a simple china setting with silver utensils.
+In the center of the table was a cup containing fifteen or so
+small stones.&lt;/p&gt;
+
+&lt;p&gt;Daniel looked up at the altar again. It was plated with silver,
+probably wood beneath. Sitting atop it was a thick piece of
+gold, or something plated with gold. It was carved with some
+random, abstract design. Daniel walked around the table to the
+altar and looked closely at the object sitting on top of it. It
+rose up from its base in curved lines that twisted around each
+other, making what seemed to be a solid object, but for a few
+small, irregularly spaced, yet identical gaps through which
+Daniel could see the plain white wall. On the rim of the altar
+was an inscription:&lt;/p&gt;
+
+&lt;p&gt;Αστρονομυ cομπελσ τηε σοτηλ το λοοκ τηπωαρδσ ανδ λεαδσ τησ φρομ
+τηισ ωορλδ το ανοτηερ&lt;/p&gt;
+
+&lt;p&gt;~Πλατώ&lt;/p&gt;
+
+&lt;p&gt;Daniel reached into his breast pocket and pulled out his pad,
+and began transliterating the text, letter by letter. The
+common people can’t read writing like this, so the
+Diafotismenoi use it as a code. They were never clever enough
+to change it after thousands of years of continuous use, so it
+was usually a quick decypher:&lt;/p&gt;
+
+&lt;p&gt;Astronomy compels the soul to look upwards and leads us from
+this world to another.&lt;/p&gt;
+
+&lt;p&gt;~Plato&lt;/p&gt;
+
+&lt;p&gt;Daniel thought for a moment, then looked yet again at the figure
+atop the altar. He noticed that three of the holes in the ornate
+structure were very near each other in the center, immediately
+he recognized the solution. He spun around and grabbed the
+small bowl off of the table, and one by one filled each of the
+holes on the gold object with a pebble from the cup. When the
+last pebble went in, he was looking at an image of the
+constellation Orion. He heard several simultaneous clicks
+within the altar, and pushed it to his left, revealing a
+staircase descending into the floor. Daniel checked that his
+radio was off, and his weapon safely holstered, and he began
+his descent.&lt;/p&gt;
+
+&lt;p&gt;The altar slid to the left, revealing a staircase that descended
+along the wall. Daniel looked around the room one last time,
+then checked over his disguise before taking the first step
+down.&lt;/p&gt;
+
+&lt;p&gt;The stairway led down only a man’s height, Daniel had to duck a
+bit not to hit his head on the floor of the upper room on the
+way down. There was another Greek note written on the wall, but
+Daniel didn’t bother to transliterate it. It looked somewhat
+haphazard, and added after the building was constructed. Daniel
+guessed that it was a reminder to close the passageway, so he
+reached up and pushed the altar back into its original
+position.&lt;/p&gt;
+
+&lt;p&gt;He walked into the tunnel that was only just tall enough for him
+to stand in. After a short distance it made a left turn, and
+Daniel followed the turn. A much longer descending staircase
+awaited him, and he followed it.&lt;/p&gt;
+
+&lt;p&gt;At the bottom of the tunnel was an open doorway. Daniel stepped
+through the doorway and was amazed at what faced him.&lt;/p&gt;
+
+&lt;p&gt;A golden doorway at least twenty feet high was across a wide
+chamber. A huge circular ageis was worked into the center, with
+an arc of philosophical text stretching across the top edge.
+There were no handles on the door; it seemingly could only be
+opened from the inside. A pair of men stood on either side of
+the door. They wore trenchcoats over ceremonial breastplates,
+crested helms, and they both carried spears. They certainly
+won’t be helping me get in.&lt;/p&gt;
+
+&lt;p&gt;Daniel looked around the wide space. The walls were made of
+stone blocks with no decoration. In the two corners opposite
+the gateway were a pair of medium sized round tables with a few
+Diafotismenoi sitting around them. Daniel walked over to the
+table on his right. Two men in expectable garb sat opposite one
+another, drinking some strange beverage Daniel would rather not
+touch. They were discussing some matter of importance to
+themselves. Daniel inturrupted them with a greeting.&lt;/p&gt;
+
+&lt;p&gt;“Mae govannen, melyn. Iran dolthad cham”&lt;/p&gt;
+
+&lt;p&gt;“Le suilon. Licet.” one of them replied. He was thin, with
+oily black hair. Daniel percieved no suspicious looks, so he
+began to talk.&lt;/p&gt;
+
+&lt;p&gt;“Do you spend most of your time here?” Daniel asked.&lt;/p&gt;
+
+&lt;p&gt;“I do. I have lived most of my life in this place.” he said,
+looking around.&lt;/p&gt;
+
+&lt;p&gt;This would be the hard part. To make it convincing, Daniel would
+have to use all of his expertise and training to speak in a
+fashion these men would recognize.&lt;/p&gt;
+
+&lt;p&gt;“I am visiting from a sanctuary in the eastern suburbs.” he
+said, hoping for a favorable response.&lt;/p&gt;
+
+&lt;p&gt;“Ah. I have been there.” he said, with one corner of his mouth
+turned up.&lt;/p&gt;
+
+&lt;p&gt;Oh no. Here I have to be very careful. “How often?” Daniel
+asked.&lt;/p&gt;
+
+&lt;p&gt;The man looked up. “Only once, but it was a pleasant
+experience.”&lt;/p&gt;
+
+&lt;p&gt;Daniel came close to sighing relief. His original plan was to
+manuever this one into revealing the means for entering the
+inner sanctuaries, but Daniel knew little to nothing about any
+of the other lairs, and now he can’t use unfamiliarity as an
+excuse, since he did not know how his claimed origin works.&lt;/p&gt;
+
+&lt;p&gt;Daniel talked to them for some time afterwards on the natures of
+language, music, and drink before he thanked the gruff man and
+excused himself. He would have to work hard to maintain his
+disguise. He approached the large door, and stopped in front of
+it to examine its marvelously intricate carvings are reliefs. He
+walked to the left side of the door and came to the guard , and
+said with a generic accent, “I am visiting from elsewhere. How
+may I pass through this door?”&lt;/p&gt;
+
+&lt;p&gt;The guard didn’t turn his head. “Ú-vinnal.” You don’t.&lt;/p&gt;
+
+&lt;p&gt;Daniel looked left and right, but there were no signs of attack
+or ambush. He kept his cool, and asked again, “Please sir, I
+need to get inside.”&lt;/p&gt;
+
+&lt;p&gt;This time the guard made no response at all.&lt;/p&gt;
+
+&lt;p&gt;Giving up, Daniel walked across the room towards the guard on
+the other side. He again addressed the man in armor, “Mae
+govannen, melyn.”&lt;/p&gt;
+
+&lt;p&gt;He responded in kind.&lt;/p&gt;
+
+&lt;p&gt;Daniel continued, ”Forgive me, I am visiting from elsewhere, how
+do I get through the gate?”&lt;/p&gt;
+
+&lt;p&gt;“You can’t get through the gate.” he said with a tiny vestige
+of a smile.&lt;/p&gt;
+
+&lt;p&gt;“There must be a way through.”&lt;/p&gt;
+
+&lt;p&gt;“Follow me.“ He led Daniel to the right corner of the large
+chamber and he pressed on one of the huge blocks that formed
+the wall. To Daniel’s surprise, the stone slid inwards, that a
+large section of the wall was a hollow passageway. It extended
+back towards the gate inside the wall of the room. Daniel
+thanked the guard and entered the passageway, sliding the block
+into place behind him.&lt;/p&gt;
+
+&lt;p&gt;Daniel emerged from the passage running through the wall into
+another large room, perhaps three quarters the size of the last
+one. As he entered the room, he noticed the wall to his left was
+very close to the passageway entrance. That huge door must open
+into solid rock, or not open at all. Daniel pondered this as he
+looked around the room.&lt;/p&gt;
+
+&lt;p&gt;This chamber appeared to be some sort of common area. There was
+only one other door, it was on the opposite wall in the center,
+similar designs as the great majestic gate, but much smaller.
+The room was filled with Diafotismenoi, making idle
+conversation. Old fashioned, incandescent bulbs on the ceiling
+lighted the long tables that ran along the length of the hall,
+and one wall was lined with what seemed to be a buffet table.
+Daniel walked around the edge of the room, and found that it
+was a buffet table, and was just now beginning to serve the
+chattering throng.&lt;/p&gt;
+
+&lt;p&gt;Rather than awkwardly asking around, Daniel decided to wait
+until someone else moved through the far door before he
+attempted it. Suddenly feeling hungry, Daniel checked his
+outfit compared to everyone else’s one more time, just to make
+sure he wouldn’t stand out, and he got in line for food.&lt;/p&gt;
+
+&lt;p&gt;He sat across from a pair of Diafotismenoi, a male and a female,
+who appeared to be a couple. They were constantly smiling at
+each other, and each seemed perfectly content with the other.
+They laughed and joked and carried on like a normal family. No,
+like a perfect one.&lt;/p&gt;
+
+&lt;p&gt;On Daniel’s right was a small mean with secondhand, damaged
+glasses, who laid a book on the table when he sat down, and
+immediately began reading it after he was finished reading. He
+had hair down to his shoulders, longer than most me, (a common
+trait among the Diafotismenos apparently), It was dark and
+seemed to flare out at the ends. Daniel saw that his book was
+titled “Magnanimity: pride vs prudence”, and he flipped through
+it much faster than Daniel could with most of his books.&lt;/p&gt;
+
+&lt;p&gt;On Daniel’s left was a tall, fair-skinned woman with long,
+beautiful read hair, and bright green eyes. She seemed to have
+a say in everything, she ate little and did most of the talking
+for Daniel’s part of the table.&lt;/p&gt;
+
+&lt;p&gt;The man across the table was completely engrossed in his lover,
+and never spoke unless she herself entered the conversation
+without him. He was an experienced man for his age, and had
+many stories that Daniel intently listened to. He talked about
+his education, the places he’s visited, things he’s learned,
+and the scores of people he’s met. The redhead always wanted to
+interrupt his stories by recalling anecdote f her own, and the
+conversation usually moved along without her. Whenever they
+touched on a scientific, or philosophical note, the glasses man
+looked up and gave his brief opinion, which itself drew some
+discussion from the rest, while he went back into his
+philosophical text.&lt;/p&gt;
+
+&lt;p&gt;An hour went by, or maybe two, until the inward door opened up
+and partisans started walking through. While walking through
+the door, Daniel notices a familiar face in the crowd. A big
+burly man appeared a few feet ahead of him, making his way
+through that door. Daniel tried to apprehend this man weeks
+ago, but he was able to break Daniel’s handcuffs with his own
+strength. Daniel suddenly remembered that all of these
+“Enlightened” were deviants and dangerous to everyone in
+town.&lt;/p&gt;
+
+&lt;p&gt;The new room was like a large chapel. There were no stained
+glass windows, or flying buttresses, but relief statues of men
+Daniel did not recognize and a large hanging, metal Aegis.
+Daniel took his seat on a bench between the redhead and the
+bookworm, and looked around for some sort of speaker or leader
+for whom everyone seemed to be hoping to see.&lt;/p&gt;
+
+&lt;p&gt;Finally, from behind one of the statues a man in a whining white
+robe walked in front of the crows and began his ceremony. “You
+are arisen!” he said.&lt;/p&gt;
+
+&lt;p&gt;“We have arisen indeed,” the crowd replies.&lt;/p&gt;
+
+&lt;p&gt;The robed man smiled and continued, “Today, you have all come
+forth from the drear of everyday life into the light of truth,
+today you have come out of the cave!”&lt;/p&gt;
+
+&lt;p&gt;There was applause.&lt;/p&gt;
+
+&lt;p&gt;He spoke again, “We have been hunted, apprehended, and
+exterminated for years, but the heart of our culture will stand
+strong, our future belongs to us, and no others!” a shout of
+approval from the back. The speaker smiled, “The government
+spreads misinformation, lies about us. They fear our strength!
+They want to stomp on whatever free thought is left in the
+world, but we stand in their way. They fear us!” The audience
+heartily approved.&lt;/p&gt;
+
+&lt;p&gt;“The Teacher tells us that the truth is painful. Only a few
+can truly come to know it by overcoming that pain. He says that
+those are the men and women who are fit to rul1. Those few are
+in this room!” More applause. “The Philosopher says that the
+virtuous man is the one who is worthy and correctly estimates
+his own worth. Do we overestimate ourselves?” The hall
+resounded with a united “NO!”&lt;/p&gt;
+
+&lt;p&gt;The speaker waited for his listeners to calm down before he
+continued, “But we must be humble. Do not kill or steal without
+reason, do not reveal yourselves, or show off your own superior
+intelligences, but be prudent in all that you do.” More
+applause from the audience.&lt;/p&gt;
+
+&lt;p&gt;The leader brought his people under control again and opened his
+mouth to speak again when a distant, heavy thud was heard behind
+the audience. Daniel’s eyes widened. Everyone looked back
+towards the door.&lt;/p&gt;
+
+&lt;p&gt;Two of the armored Diafotismenoi were standing by the door, and
+they turned to face it. Daniel remembered that he had called
+for help some time ago. He tried to move or speak but couldn’t.
+He could only watch as the armored men disappeared in a cloud of
+dust, and the ornate door was cast through the air down the
+center aisle.&lt;/p&gt;
+
+&lt;p&gt;One of the men on the benches stood up and reached across his
+body, as if looking for a gun. He fell with a loud crack before
+he could get inside of his coat.&lt;/p&gt;
+
+&lt;p&gt;The dust in the back settled, and nine Apprehension &amp;amp;
+Extermination officers stod in the doorway, with their rifles
+pointed into the chapel. The denizens of the underground
+brotherhood and the invaders from above stared at each other
+for a long moment, and then the officers opened fire.&lt;/p&gt;
+
+&lt;p&gt;The speaker tried to run to the side of his small stage, but he
+fell in a lifeless heap when several new cavities were driven
+into his body.&lt;/p&gt;
+
+&lt;p&gt;The redheaded girl screamed, and began running, who knows where
+to. A bullet caught her calf, and another her chin, and she
+disappeared beneath the rows of dwindling bodies.&lt;/p&gt;
+
+&lt;p&gt;Another projectile punched through the neck of the sweet girl.
+Her lover cried in pain, but soon found his chest speckled with
+bullet holes, and collapsed with his beloved.&lt;/p&gt;
+
+&lt;p&gt;The man with glasses dove under one of the benches and began to
+crawl away. Soon his way was blocked by the body of another,
+and he stopped in fear, only to become boxed in, buried by the
+bodies of those he considered brothers.&lt;/p&gt;
+
+&lt;p&gt;Daniel, losing himself to instinct, tore off his coat disguise
+and ducked down as he made his way to the back of the room.
+Causality seemed to break down for him. Each cry is preceded by
+the thump of metal striking flesh, and followed by the crack of
+the discharging weapon. The officers must’ve recognized him or
+his uniform, because he made it to the back of the room, and
+through the line of shooters. Standing in the hall was the
+Chief, accompanied by several other gunmen. Daniel briskly
+approached him and stammered a bit, before gasping, “You need
+to order them to stop.” another breath. “They have women and
+children, they’re not what we make them out to be!”&lt;/p&gt;
+
+&lt;p&gt;The Chief raised and eyebrow and took a step within inches of
+Daniel. “As you said yourself, they are a threat to society.”&lt;/p&gt;
+
+&lt;p&gt;The shooting stopped, the chief stretched his neck and fixed his
+collar as Daniel turned back towards the silenced chapel door.
+He opened his mouth, but didn’t make a sound as he dropped to
+the ground with one final crack.&lt;/p&gt;
+
+
+    </content>
+  </entry>
+  
+  <entry>
+    <title>What does it feel like if the house you are in is hit by lightning?</title>
+    <link href="http://localhost:4000/blog/what-does-it-feel-like-when-your-house-is-struck-by-lightning/"/>
+    <updated>2016-05-23T18:36:25-07:00</updated>
+    <id>http://localhost:4000/blog/what-does-it-feel-like-when-your-house-is-struck-by-lightning</id>
+    <author>
+      <name>Trevor Sullivan</name>
+      <uri>http://localhost:4000/</uri>
+      <email>Trevortds@gmail.com</email>
+    </author>
+    <content type="html">
+      &lt;img src=&quot;http://localhost:4000/images/north.jpg&quot;&gt;&lt;br/&gt;
+      &lt;h2 id=&quot;original-question&quot;&gt;Original Question:&lt;/h2&gt;
+
+&lt;h3 id=&quot;what-does-it-feel-like-if-the-house-you-are-in-is-hit-by-lightning&quot;&gt;What does it feel like if the house you are in is hit by lightning?&lt;/h3&gt;
+&lt;p&gt;Unless you are connected to the house’s electrical system, you won’t die, that’s the good news.&lt;/p&gt;
+
+&lt;p&gt;If you are in a high occupancy building, a tall building, or an expensive building, it will have systems in place to divert electric flow in a safe direction, so you will feel nothing. Even better than not being dead!&lt;/p&gt;
+
+&lt;p&gt;If you’re in a normal house with no special lightning protection, and you aren’t hit directly in a stroke of remarkably bad luck, you will feel pain in your ears from the very loud bang above and around you, followed by deafness, followed by panic and confusion as all the walls have caught fire.&lt;/p&gt;
+
+&lt;p&gt;You see, when the current of lightning goes through your house’s internal wiring, your wires turn into lightbulb filaments, and then into fuses, and then into exploding fuses. You need to very thoroughly search for fires, they often start in the walls or in the attic. Then you need to count all of your electronics that aren’t fried. A surge protector usually isn’t enough to save your computer, and your phone, and your everything else that was plugged in when the lightning struck.&lt;/p&gt;
+
+&lt;p&gt;Then you need to pick out the glass shards from your dog. Oh, did I not mention? The shock of the thunder at range zero has a tendency to shatter glass. And wood. And rock. And brick. And concrete. Make sure all that stuff isn’t broken.&lt;/p&gt;
+
+&lt;p&gt;I mean, aside from the pain, and the fear, and the panic, and the material loss, it feels like not being dead, I guess, so, pretty good. Enjoy.&lt;/p&gt;
+
+&lt;p&gt;For now.&lt;/p&gt;
+
+    </content>
+  </entry>
   
   <entry>
     <title>What Is the Probability That a Rhyme Occurs in a Given Language?</title>
@@ -70,11 +1144,11 @@ birds of air and flowers blooming&lt;/p&gt;
 &lt;p&gt;is a kind of disappointing rhyme. If I were in a poetry class, that would get me a solid C, only because I kept the meter. However, in Persian&lt;/p&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;Morde budam, zande shodam gariye budam khande shodam   &lt;br /&gt;
-dult ashagh amad o man dult painde shodam&lt;/p&gt;
+  &lt;p&gt;Morde bodam, zende shodam gerye bodam khande shodam   &lt;br /&gt;
+dowlat e eshgh âmad o man dowlat e pâyande shodam&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;is totally fine. In fact, most Persian speakers can recite this poem by heart, it’s one of the most famous poems by one of the most famous poets, Rumi. Every line ends with “-am” which is the marker for 1st person singular verb agreement, and a Persian speaker would call that rhyme.&lt;/p&gt;
+&lt;p&gt;is totally fine. In fact, many Persian speakers can recite this poem by heart, it’s one of the most famous poems by one of the most famous poets, Rumi. Every line ends with “-am” which is the marker for 1st person singular verb agreement, and a Persian speaker would call that rhyme.&lt;/p&gt;
 
 &lt;p&gt;So, what do we do? For the purposes of this discussion, I’m going to go ahead and say that Persian rhyming rules don’t count. I say so at my own peril, but I think that far more languages are like English, and forbid suffix rhyme than like Persian where it counts. This means that we’re only going to be looking at stems.&lt;/p&gt;
 
@@ -100,12 +1174,12 @@ stops &amp;lt; &amp;lt; &amp;lt; delayed release &amp;lt; &amp;lt; continuants &
 &lt;p&gt;This is the part where we need to actually look at the languages, with all the rules, and try to figure out what is and isn’t legal. Now that we have these basic rules, we can make lists of possible nuclei and codas. Thankfully, some very bored people have already done the tedious work for us, and online you can find exhaustive lists of all the possible codas or nuclei of certain languages. Let’s stick with Chinese and English, since you brought them up.&lt;/p&gt;
 
 &lt;h3 id=&quot;chinese&quot;&gt;Chinese&lt;/h3&gt;
-&lt;p&gt;In Chinese, the syllable structure is rather simple, you only get one onset consonant, one vowel, and one coda syllable, so sonority hierarchy doesn’t actually matter. Various institutions have created Pinyin Tables, that contain an exhaustive list of possible syllables, ignoring tone. On this Pinyin Table on Wikipedia (Pinyin table), the rhymes are on the Y axis. We can count the number of rimes simply by counting how many rows there are. But wait! In Chinese, the optional glide is not considered part of the rime (depending on who you ask), so we have to look carefully at the table, and only count the rows without glides. By my count, that gives us 21 rimes. Hooray!&lt;/p&gt;
+&lt;p&gt;In Chinese, the syllable structure is rather simple, you only get one onset consonant, one vowel, and one coda syllable, so sonority hierarchy doesn’t actually matter. Various institutions have created Pinyin Tables, that contain an exhaustive list of possible syllables, ignoring tone. On this Pinyin Table on Wikipedia (&lt;a href=&quot;https://en.wikipedia.org/wiki/Pinyin_table&quot;&gt;Pinyin table&lt;/a&gt;), the rhymes are on the Y axis. We can count the number of rimes simply by counting how many rows there are. But wait! In Chinese, the optional glide is not considered part of the rime (depending on who you ask), so we have to look carefully at the table, and only count the rows without glides. By my count, that gives us 21 rimes. Hooray!&lt;/p&gt;
 
 &lt;h3 id=&quot;english&quot;&gt;English&lt;/h3&gt;
 &lt;p&gt;Jesus Christ, how are we going to count English rimes? Well, we’ll have to do some combinatorics, there are simply too many possibilities for anybody to make a table that means anything. There are a few tables we can use, though.&lt;/p&gt;
 
-&lt;p&gt;On this wikipedia page, you’ll find a list of possible codas in English, ignoring the final /s/: English phonology. The creators of this list already took into account the maximal form and sonority hierarchy, as well as a couple more specific rules that English has. If we count all of those, we should get a total number of possible codas of 97 . Since you can stick an /s/ or a /t/ or /d/ on any of these as inflectional markers, we’re going to go ahead and ignore those, since up above, remember, we said we’re not going to count inflection. Since you can also have no coda, we’re going to stick an extra possibility on there for a total of 98.&lt;/p&gt;
+&lt;p&gt;On this wikipedia page, you’ll find a list of possible codas in English, ignoring the final /s/: &lt;a href=&quot;https://en.wikipedia.org/wiki/English_phonology#Coda&quot;&gt;English phonology&lt;/a&gt;. The creators of this list already took into account the maximal form and sonority hierarchy, as well as a couple more specific rules that English has. If we count all of those, we should get a total number of possible codas of 97 . Since you can stick an /s/ or a /t/ or /d/ on any of these as inflectional markers, we’re going to go ahead and ignore those, since up above, remember, we said we’re not going to count inflection. Since you can also have no coda, we’re going to stick an extra possibility on there for a total of 98.&lt;/p&gt;
 
 &lt;p&gt;So now we’ve got a count of codas, but a rime is a coda put next to a vowel. English, depending on your dialect, has around 15 vowels (normally I would count almost twice that, but our list of codas counts rhoticity as a consonant, I think that’s wrong, but whatever). If we naively assume that any vowel can be stacked with any coda to produce a rhyme, that gives us 15*98=1470 rimes. Holy shit. This language, man, this language.&lt;/p&gt;
 
@@ -129,9 +1203,248 @@ stops &amp;lt; &amp;lt; &amp;lt; delayed release &amp;lt; &amp;lt; continuants &
   </entry>
   
   <entry>
+    <title>What&#39;s the Backstory of Sauron Before the Hobbit and the Lord of the Rings?</title>
+    <link href="http://localhost:4000/blog/whats-the-backstory-of-sauron-before-the-hobbit-and-the-lord-of-the-rings/"/>
+    <updated>2013-12-14T10:01:45-07:00</updated>
+    <id>http://localhost:4000/blog/whats-the-backstory-of-sauron-before-the-hobbit-and-the-lord-of-the-rings</id>
+    <author>
+      <name>Trevor Sullivan</name>
+      <uri>http://localhost:4000/</uri>
+      <email>Trevortds@gmail.com</email>
+    </author>
+    <content type="html">
+      
+      &lt;p&gt;Sauron is a Maia.  Created by Eru Ilúvatar (basically God) as a servant to the Valar (somewhere between Greek gods and archangels).  When the world was created, he and several other Maia (who became known as Balrogs), followed Melkor, later known as Morgoth, the rebel Vala, dedicated to corrupting and destroying civilization.&lt;/p&gt;
+
+&lt;p&gt;I should probably note at this point that Maia, Vala, and the elves, which have a similar nature to them are primarily spiritual beings.  They are immortal, and they take physical form, but their bodies are temporary.  Maia and Vala and some elves (such as Glorfindel) are powerful enough to build new bodies for themselves when their old ones are destroyed.&lt;/p&gt;
+
+&lt;p&gt;Skip a bit, there are a few conflicts, the elves appear in the world, an elf named Feanor makes a set of beautiful gems called the Silmarils, Morgoth steals them and brings them to Middle Earth, a significant number of elves follow him, including Feanor’s family, as well as several other notable elves (Fingolfin, Turgon, Galadriel). And a very long war is fought to attempt to regain the Silmarils.  This part of the story takes place on the sub-continent of Beleriand, maps are available online. This war is the main conflict of The Silmarillion.&lt;/p&gt;
+
+&lt;p&gt;With that set up, we now have the elves laying a thousand year siege to Morgoth’s mountain-range-castle-fortress-dungeon, Angband.  The siege is suddenly broken in Dagor Bragollach, the Battle of Sudden Flame. Morgoth’s chief servant, Sauron, takes up residence in the tower of Tol Sirion, the gateway from the grasslands and forests of Beleriand to the wastes of the North and eventually Angband.&lt;/p&gt;
+
+&lt;p&gt;In a beautiful love story that you should totally read, a man named Beren takes a solitary quest to obtain a Silmaril at the urging of the Elf-King Thingol for the hand of his daughter Luthien.  He gets some help from the Noldorin High King Finrod.  As they are travelling past Tol Sirion, Sauron sees them and captures them, leaving them in his dungeons with a werewolf.  Luthien, fearing the worst for Beren, escaped her father and travelled to Tol Sirion with the help of a great hound named Huan.  When she arrived there, Sauron attacked Luthien with magic, but her power matched his.  He sent werewolves to kill her, but Huan destroyed all of them.  Knowing of a prophecy that Huan could only be killed by the greatest wolf ever to live, Sauron took the form of a tremendous, monstrous werewolf, and attacked Huan himself, but Huan was able to overpower Sauron, pin him by the neck, and kill him, and Sauron’s spirit departed to Angband. Beren was rescued, and he and Luthien continued on their quest, but that’s another story for another time.&lt;/p&gt;
+
+&lt;p&gt;At the end of the story, though, Beren and Luthien do suceed in obtaining a Silmaril, and it falls into the hands of a Mariner named Earendil. Earendil travels across the sundering seas and makes it to Valinor, where the Valar and the High Elves live, and he beseeched them to come to the aid of Middle-earth.  The Valar oblige, and they attack Morgoth.  They capture him and turn Angband inside out, and they cast down the mountains, but they cannot find Sauron. Their power and wrath is so great that they also accidentally destroy Beleriand.  Oops.  This is why, the next time mortals needed help, they only sent the Wizards, lesser Maia who were instructed to advise the people of Middle Earth, but were forbidden from using their full power in the presence of mortals.&lt;/p&gt;
+
+&lt;p&gt;Then the rest of Pradeep’s answer takes place.  Sauron builds Barad-Dur in Mordor.  He takes the form of a wise elf and deceives the elves of Eregion into helping him forge 16 rings.  The elves then forge their own three, that he never touches, and he forges the One.  He wages war against the Elves of Eregion and recaptures the sixteen other rings and distributes them, Nine to men, and Seven to dwarves. The Numenorians intervene and defeat him, and he is captured and brought to the island of Numenor.&lt;/p&gt;
+
+&lt;p&gt;While there, he eventually climbs his way from prisoner to high priest of an evil religion and chief adviser to the King.  Under his advice, the King then builds a fleet and attempts to attack Valinor.  The gods don’t really like this, so they wipe Numenor off the face of the Earth, separate the continent of Valinor from the world, and then they bend the world into a sphere.  Sauron’s beautiful body is completely destroyed and he is unable to take the same form again.&lt;/p&gt;
+
+&lt;p&gt;He rebuilds a body for himself in the form of a great warlord, and rebuilds Barad-Dur, and Mordor. Before he has a chance to attack, he is soundly defeated by the Last Alliance of Men and Elves, but not without managing to kill the last High King of the Elves, Gil-Galad, as well as Elendil, High King of the Numenorians, and one of his two sons, Anarion. He is killed, but his body is not destroyed.  Isildur cuts the One from his hand and takes it as a souvenir.&lt;/p&gt;
+
+&lt;p&gt;With the loss of the power of the One, Sauron is weak.  Depending on which version of Tolkien’s notes you subscribe to, he is either completely formless, or he is trapped in his terrifying warlord body.  I prefer the latter. He travels to Dol Guldur, where he lies low and takes up the name “The Necromancer” in the hopes that his enemies won’t realize who he really is, and just take him to be an insane human wielder of dark magic.  Gandalf discovers him, this is where the Hobbit begins.  After the events of the Hobbit, the White Council gathers their armies and roots him out of Dol Guldur.&lt;/p&gt;
+
+&lt;p&gt;By this point, the line of Kings in Gondor has been lost, save for the little known Rangers in the North, and they become lax in their vigilance. Barad-Dur is rebuilt, and Minas Ithil (Tower of the Moon)is captured and renamed Minas Morgul(Tower of Death). Osgiliath is destroyed completely, and the capital of Gondor is moved to Minas Anor(Tower of the Sun), renamed Minas Tirith (Tower of Guard). That’s about the state of things at the beginning of the Lord of the Rings.&lt;/p&gt;
+
+&lt;p&gt;After the One Ring is destroyed, most of Sauron’s power is removed from the world.  He no longer has any ability to construct a body for himself, or indeed to cause any change in the physical world.&lt;/p&gt;
+
+&lt;p&gt;I hope the context contained here helps you to understand his character a little better. This is, to the best of my knowledge, a description of every event in the Legendarium that relates to Sauron.&lt;/p&gt;
+
+    </content>
+  </entry>
+  
+  <entry>
+    <title>The Traveller</title>
+    <link href="http://localhost:4000/creativewriting/the-traveller/"/>
+    <updated>2013-12-13T00:00:00-07:00</updated>
+    <id>http://localhost:4000/creativewriting/the-traveller</id>
+    <author>
+      <name>Trevor Sullivan</name>
+      <uri>http://localhost:4000/</uri>
+      <email>Trevortds@gmail.com</email>
+    </author>
+    <content type="html">
+      
+      &lt;p&gt;A boy and his balloon&lt;/p&gt;
+
+&lt;p&gt;He walks, stumbles, stutters through the street,&lt;br /&gt;
+Alone and small he travels among&lt;br /&gt;
+The white and grey feathers flapping for food&lt;br /&gt;
+In a world full of color and life&lt;/p&gt;
+
+&lt;p&gt;His companions are always there&lt;br /&gt;
+He holds them tight as they might disperse&lt;br /&gt;
+Still he holds them, a strong leader, grave&lt;br /&gt;
+They keep to him as if tied with iron chain.&lt;/p&gt;
+
+&lt;p&gt;He sees the mountain, great and tall&lt;br /&gt;
+with marble walls and roaring falls&lt;br /&gt;
+with roosts for birds to wet their necks&lt;br /&gt;
+and pools that shine with gold&lt;/p&gt;
+
+&lt;p&gt;The then goes past the mighty tree&lt;br /&gt;
+With broad leaves and strong branches.&lt;br /&gt;
+Taller than the mountain it seems&lt;br /&gt;
+A true life-giver, majestic, and great&lt;/p&gt;
+
+&lt;p&gt;The way is fraught with trouble&lt;br /&gt;
+Stone men stand in between  &lt;br /&gt;
+The hero and his destination&lt;br /&gt;
+With flat heads and long arms&lt;br /&gt;
+With swords and spears&lt;br /&gt;
+That curl and twist in strange ways&lt;br /&gt;
+Yet he defeats them, and pushes through.&lt;/p&gt;
+
+&lt;p&gt;He meets many characters on his way&lt;br /&gt;
+The fearful dog that yaps and naps&lt;br /&gt;
+The old man at his game&lt;br /&gt;
+The businessman with much to do&lt;br /&gt;
+And the teenagers with none&lt;/p&gt;
+
+&lt;p&gt;And as he trudges along his way,&lt;br /&gt;
+All of these he passes by&lt;br /&gt;
+Tired and weak by end of day&lt;/p&gt;
+
+&lt;p&gt;He stops and rises towards the sky.&lt;/p&gt;
+
+    </content>
+  </entry>
+  
+  <entry>
+    <title>What Are the Origins of English?</title>
+    <link href="http://localhost:4000/blog/what-are-the-origins-of-english/"/>
+    <updated>2013-09-28T10:01:17-07:00</updated>
+    <id>http://localhost:4000/blog/what-are-the-origins-of-english</id>
+    <author>
+      <name>Trevor Sullivan</name>
+      <uri>http://localhost:4000/</uri>
+      <email>Trevortds@gmail.com</email>
+    </author>
+    <content type="html">
+      
+      &lt;p&gt;England&lt;/p&gt;
+
+&lt;p&gt;I really want to leave it at that, but I am infamously thorough, especially when answering questions such as these. Waaaaay back during the middle-ages, there were two tribes living in Northern Germany.  One of them (which held a lot of territory in modern day Denmark) were called the Angles, the other, (which bordered them to the South) were called Saxons.  The languages they spoke were so similar, that many modern linguists consider them to be the same language, often called “Anglo-Saxon” or sometimes, “Old English”&lt;br /&gt;
+At this time however, the language was more like modern German.  Here is an example of Old English/Anglo-Saxon.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;wiges weorðmynd,         þæt him his winemagas &lt;br /&gt;
+georne hyrdon,         oðð þæt seo geogoð geweox, &lt;br /&gt;
+magodriht micel.         Him on mod bearn &lt;br /&gt;
+þæt healreced         hatan wolde, &lt;br /&gt;
+medoærn micel,         men gewyrcean &lt;br /&gt;
+-Beowulf&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Near the end of the classical period (~100BC), mainland Europeans discovered the British Isles, which were then populated by Celts.  The Romans were pushed out, but Vikings, Angles, and Saxons began colonizing Great Britain.  The two tribes began to mix, and soon the name “Angelcynn”, derived from the Angle tribe, came to refer to all of the German colonists, and they founded the Kingdom of England, and their combined language became known as English (what we now call Old English).  &lt;br /&gt;
+In this image you can see the colonies of the Anglo-Saxon tribes.  Most of the island is still controlled by Celts, who would eventually be pushed back into just Scotland and Wales. The Jutes were another Germanic tribe, but they were quickly assimilated into Anglo-Saxon Culture.  Northumbria was long fought over by the Kingdom of England and the Viking Invaders, and once they were pushed out, Lothian was ceded to the Scots who threatened war.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/images/britain.png&quot; alt=&quot;Britain&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In 1066 AD the Normans of Northern France (led by William the Conqueror) invaded England and conquered the kingdom and established a new monarchy.  The Duke of Normandy took the additional title of King of England.  His descendants later went to war with Wales, Scotland, and Ireland (which was famously conquered by Richard the Lionheart before he went on the 3rd Crusade).  Later, in the 14th century, the English descendant of William the Conqueror, Edward III, had a claim to the French Throne, and launched an invasion of France that resulted in the Hundred Years War (1337-1453), which ended when the English were defeated at Castillon and lost all of their territory in mainland Europe, except for Calais (this would become important in a large conflict about 500 years later).&lt;br /&gt;
+During this period, since the nobility of England came from France, French was the dominant or “high” language of the nation, and Old English was spoken by the peasantry.  Over time, as the two classes mingled, a new language was born, with mostly Old English grammar, but mostly French vocabulary, and we call this Middle English. &lt;br /&gt;
+The origin of Middle English is particularly interesting in its long lasting effects, as it resulted in a lot of synonyms in Modern English, one from Romance languages through French, and the other Germanic through Anglo-Saxon.  This is most obvious for our terms for meat: the dish is called by its French derived name: “steak, ham, poultry” and the animal by its Old English derived name: “Cow, pig, chicken”.  This is very uncommon in other languages worldwide, where the meat and the animal are called by the same word. Here is an example of Middle English:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Whan that Aprill, with his shoures soote&lt;br /&gt;
+The droghte of March hath perced to the roote&lt;br /&gt;
+And bathed every veyne in swich licour,&lt;br /&gt;
+Of which vertu engendred is the flour;&lt;br /&gt;
+-Chaucer, The Caunterbury Tales&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Almost readable, right? Take note: this is why we have so many weird spellings in Modern English: everything that is written above is pronounced literally, meaning that there are no silent “e”s.  As time passed, we changed the way we talk, but not the way we spell.&lt;br /&gt;
+The rest of the story is pretty boring.  In the 15th and 16th century, there was a Renaissance in England, many writers, artists, and intellectuals flourished (such as William Shakespeare, Thomas More, and Francis Bacon).  There was a sudden interest in Ancient Latin and Greek ideas, and many words from those languages entered English through philosophers and scientists.  By the time these three famous men wrote, English grammar had stabilized, and formed what we now know as Modern English, which was spoken with little variation ever since. &lt;br /&gt;
+Then there was imperialism, English spread to North America, South Africa, Australia, and India, and while many of these colonies eventually got independence, their people still spoke a dialect of English, not unlike that used in Britain. In World War 2, the vast majority of Allied armies spoke English, especially once America, Canada, and Australia joined the fight.  France, Italy, and Germany were defeated, and English became the dominant language in Western Europe for diplomacy, if not everyday life. The sheer economic power of the United States in the decades since, combined with the already extensive influence of English in the port cities (a remnant of the British Empire) have resulted in English becoming the &lt;em&gt;Lingua Franca&lt;/em&gt; of nearly the whole world. 
+That is where English originated.&lt;/p&gt;
+
+    </content>
+  </entry>
+  
+  <entry>
+    <title>Glîr o hi-Chyrf</title>
+    <link href="http://localhost:4000/creativewriting/glir-o-hi-chyrf/"/>
+    <updated>2013-06-23T00:00:00-07:00</updated>
+    <id>http://localhost:4000/creativewriting/glir-o-hi-chyrf</id>
+    <author>
+      <name>Trevor Sullivan</name>
+      <uri>http://localhost:4000/</uri>
+      <email>Trevortds@gmail.com</email>
+    </author>
+    <content type="html">
+      
+      &lt;p&gt;Corf nel ‘nin erain edhellen di ‘willith&lt;br /&gt;
+Odog ‘nin naug-hírath mi fynd gon în&lt;br /&gt;
+Neder ‘nin ephedyn fírib beraid fíred&lt;/p&gt;
+
+&lt;p&gt;Êr an Chîr Vorn bo orchamm morn dîn&lt;/p&gt;
+
+&lt;p&gt;Êr Corf a thorthad hain ban   &lt;br /&gt;
+Êr Corf a chired hain&lt;br /&gt;
+Êr Corf a thoged hain ban   &lt;br /&gt;
+A mi i-fuin nuded hain&lt;/p&gt;
+
+&lt;p&gt;Corf nel ‘nin erain edhellen di ‘willith&lt;br /&gt;
+Odo ‘nin naug-hírath vi fynd gon în&lt;br /&gt;
+Neder ‘nin ephedyn fírib beraid fíred&lt;br /&gt;
+Êr an Chîr Vorn  bo orchamm morn dîn&lt;br /&gt;
+Vi dor Mordor ias i-nduath caedar&lt;/p&gt;
+
+&lt;p&gt;Horthon! Aglonnon! Cund e-duath a horthath!&lt;br /&gt;
+Bauglir! Gwarth! Êr Corf a thorthad men ban!&lt;/p&gt;
+
+&lt;p&gt;Ash nazg durbatulûk, ash nazg gimbatûl, &lt;br /&gt;
+ash nazg thrakatulûk, agh burzum-ishi krimpatûl.&lt;br /&gt;
+Ash nazg durbatulûk, ash nazg gimbatûl, &lt;br /&gt;
+ash nazg thrakatulûk, agh burzum-ishi krimpatûl.&lt;/p&gt;
+
+&lt;p&gt;Ash nazg durbatulûk Êr Corf a thorthad men ban!, &lt;br /&gt;
+Ash nazg durbatulûk Êr Corf a thorthad men ban!.&lt;/p&gt;
+
+&lt;p&gt;Corf nel ‘nin erain edhellen di ‘willith&lt;br /&gt;
+Odo ‘nin naug-hírath vi fynd gon în&lt;br /&gt;
+Neder ‘nin ephedyn fírib beraid fíred&lt;br /&gt;
+Êr an Chîr Vorn  bo orchamm morn dîn&lt;br /&gt;
+i-nuath thog sain , &lt;br /&gt;
+Vi dor e-Mordor ias i-nduath caedar&lt;/p&gt;
+
+    </content>
+  </entry>
+  
+  <entry>
+    <title>A poem, for whomsoever cometh upon this blog</title>
+    <link href="http://localhost:4000/creativewriting/poem1/"/>
+    <updated>2012-06-27T00:00:00-07:00</updated>
+    <id>http://localhost:4000/creativewriting/poem1</id>
+    <author>
+      <name>Trevor Sullivan</name>
+      <uri>http://localhost:4000/</uri>
+      <email>Trevortds@gmail.com</email>
+    </author>
+    <content type="html">
+      
+      &lt;p&gt;This is a test, and little more
+and very few will see it.
+for I have never blogged before
+and none will ever read it&lt;/p&gt;
+
+&lt;p&gt;It may take me some months or years
+before I try to write,
+or maybe its my silly fears
+that keeps my mind locked tight&lt;/p&gt;
+
+&lt;p&gt;perhaps someone could help me out,
+somebody who can teach
+someone who, without a doubt
+can help me in my speech&lt;/p&gt;
+
+&lt;p&gt;For I have many profound thoughts,
+opinions, funny stories,
+enough to entertain a lot
+of blog-post scanning lories&lt;/p&gt;
+
+&lt;p&gt;but now, alas, there’s more to do:
+explore my page and this blog, too
+if this is ever seen again,
+well, I’ll have taken up the pen.&lt;/p&gt;
+
+    </content>
+  </entry>
+  
+  <entry>
     <title>Todo</title>
     <link href="http://localhost:4000/blog/todo/"/>
-    <updated>2016-02-29T19:27:33-07:00</updated>
+    <updated>2000-02-29T19:27:33-07:00</updated>
     <id>http://localhost:4000/blog/todo</id>
     <author>
       <name>Trevor Sullivan</name>
@@ -152,7 +1465,7 @@ stops &amp;lt; &amp;lt; &amp;lt; delayed release &amp;lt; &amp;lt; continuants &
   <entry>
     <title>Instructions for Octopress</title>
     <link href="http://localhost:4000/blog/instructions-for-octopress/"/>
-    <updated>2016-02-29T18:16:06-07:00</updated>
+    <updated>2000-02-29T18:16:06-07:00</updated>
     <id>http://localhost:4000/blog/instructions-for-octopress</id>
     <author>
       <name>Trevor Sullivan</name>
@@ -200,7 +1513,7 @@ octopress unpublish instructions
   <entry>
     <title>First Post</title>
     <link href="http://localhost:4000/blog/first-post/"/>
-    <updated>2016-02-29T00:00:00-07:00</updated>
+    <updated>2000-02-29T00:00:00-07:00</updated>
     <id>http://localhost:4000/blog/first-post</id>
     <author>
       <name>Trevor Sullivan</name>
@@ -209,7 +1522,9 @@ octopress unpublish instructions
     </author>
     <content type="html">
       &lt;img src=&quot;http://localhost:4000/images/north.jpg&quot;&gt;&lt;br/&gt;
-      &lt;nav class=&quot;toc&quot;&gt;
+      &lt;p&gt;feature: 256x1024&lt;/p&gt;
+
+&lt;nav class=&quot;toc&quot;&gt;
 &lt;ul id=&quot;markdown-toc&quot;&gt;
   &lt;li&gt;&lt;a href=&quot;#hello-world&quot; id=&quot;markdown-toc-hello-world&quot;&gt;Hello, world!&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#lorem-ipsum&quot; id=&quot;markdown-toc-lorem-ipsum&quot;&gt;Lorem ipsum&lt;/a&gt;&lt;/li&gt;
@@ -239,23 +1554,6 @@ octopress unpublish instructions
 &lt;p&gt;Aliquam turpis orci, pellentesque nec semper malesuada, facilisis quis velit. Vestibulum dui elit, pretium ut pulvinar eu, interdum congue velit. Suspendisse ipsum justo, placerat sed tincidunt id, dictum vitae arcu. Etiam iaculis efficitur leo sed facilisis. Aenean venenatis bibendum lorem sollicitudin ornare. Sed eros sem, venenatis non lacus vitae, ultrices blandit lacus. Vestibulum pulvinar aliquam est, vel feugiat velit pretium a. Fusce scelerisque sodales nibh, a tempor odio. Nullam tempor neque et urna convallis pharetra. Phasellus non est id velit lobortis malesuada. Suspendisse quis faucibus dolor. Duis condimentum lobortis sem eu viverra.&lt;/p&gt;
 
 &lt;p&gt;Aliquam ut metus mattis, lacinia orci in, egestas lectus. Quisque suscipit elementum orci, quis dignissim ipsum. Integer mattis urna lectus, sit amet efficitur lectus dapibus at. Vestibulum dictum interdum eleifend. Sed accumsan commodo lacinia. Donec non dapibus nisi. Praesent mi urna, cursus tincidunt molestie non, finibus a libero. Quisque vehicula molestie efficitur. Nulla cursus maximus ipsum in pharetra. Donec maximus enim ut turpis convallis fermentum. Phasellus semper, leo a convallis tincidunt, diam orci fringilla ante, sed elementum metus erat at odio. Duis dui enim, condimentum eu imperdiet vel, venenatis quis magna. Aliquam id libero nec ligula fringilla hendrerit sed sit amet ex. Praesent tortor leo, euismod quis dui lacinia, pulvinar aliquet justo. Ut maximus tempor arcu in facilisis.&lt;/p&gt;
-
-    </content>
-  </entry>
-  
-  <entry>
-    <title>test2</title>
-    <link href="http://localhost:4000/blog/test/"/>
-    <updated>2000-01-01T00:00:00-07:00</updated>
-    <id>http://localhost:4000/blog/test</id>
-    <author>
-      <name>Trevor Sullivan</name>
-      <uri>http://localhost:4000/</uri>
-      <email>Trevortds@gmail.com</email>
-    </author>
-    <content type="html">
-      &lt;img src=&quot;http://localhost:4000/images/bio-photo.jpg&quot;&gt;&lt;br/&gt;
-      &lt;p&gt;Hello, world!&lt;/p&gt;
 
     </content>
   </entry>
