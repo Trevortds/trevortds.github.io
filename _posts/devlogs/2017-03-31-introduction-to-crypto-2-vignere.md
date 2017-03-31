@@ -7,8 +7,8 @@ excerpt:
 tags: [crypto, cipher, ciphers]
 image:
   feature: north.jpg
-  teaser: tabula_recta.jpg
-  thumb: tabula_recta.jpg
+  teaser: tabula_recta.png
+  thumb: tabula_recta.png
 date: 2016-12-29T13:27:09-07:00
 ---
 
@@ -33,7 +33,7 @@ The Vignère Cipher was invented several times over the centuries, first by Giov
 
 The Vignere cipher is a polyalphabetic cipher. This means that it translates letters in the plaintext into several other alphabets, not only one. Encryption is still just barely simple enough that it could be done without a tool, but a tool is just as easy to make as with a Caesar cipher. 
 
-![Vignere Square]({{ site.url }}/images/devlogs/tabula_recta.png)
+<img src="{{ site.url }}/images/devlogs/tabula_recta.png" width = 50>
 
 This is a "Vignere Square". Note that each of the rows represents a Caesar rotation alphabet. The key tells you which row to use. Simply repeat the key through the length of the message. 
 
