@@ -20,8 +20,9 @@ Today I have a short log for those who, like me, find themselves easily distract
 
 This part is not new, there are even some tools for ios and linux that will do it for you, though they're unnecessary. All you have to do is edit your `/etc/hosts` file, to include lines of the following form. 
 
-`sudo vim /etc/hosts`
-
+```bash
+sudo vim /etc/hosts
+```
 
 > I like vim, you use your editor of choice, `nano`, `emacs`, `gedit`, whatever. 
 
@@ -78,9 +79,9 @@ So from right to left
 
 * 8-16 : From 8:00 AM to 4:59 PM
 
-* *    : Every day
+* \*    : Every day
 
-* *    : Every month
+* \*    : Every month
 
 * 1-5  : Monday to Friday
 
