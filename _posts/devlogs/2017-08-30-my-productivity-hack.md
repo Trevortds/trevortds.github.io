@@ -9,7 +9,7 @@ image:
   feature: north.jpg
   teaser: /devlogs/lock-xxl.png
   thumb: /devlogs/lock-xxl.png
-date: 2016-12-29T13:27:09-07:00
+date: 2017-08-30T13:27:09-07:00
 ---
 
 
