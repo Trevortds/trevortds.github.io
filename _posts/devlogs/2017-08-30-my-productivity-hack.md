@@ -18,13 +18,15 @@ Today I have a short log for those who, like me, find themselves easily distract
 
 ## Element 1: editing /etc/hosts
 
-This part is not new, there are even some tools for ios and linux that will do it for you, though they're unnecessary. All you have to do is edit your `/etc/hosts` file, to include lines of the following form. 
+This part is not new, there are even some tools for ios and linux that will do it for you, though they're unnecessary. All you have to do is edit your `/etc/hosts` file.
 
 ```bash
 sudo vim /etc/hosts
 ```
 
 > I like vim, you use your editor of choice, `nano`, `emacs`, `gedit`, whatever. 
+
+Add lines of the following form near the top. 
 
 ```bash
 127.0.0.1       www.reddit.com reddit.com *reddit.com
