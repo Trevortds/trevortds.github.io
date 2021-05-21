@@ -11,7 +11,7 @@ image:
 ads: false
 ---
 
-[Resume here]({{ site.url}}/about/TSullivanResume.pdf) (last updated March 2020)
+[Resume here]({{ site.url}}/about/TSullivanResume.pdf) (last updated May 2021)
 
 I am a python developer and NLP engineer specializing in search and machine learning. Until March 2020 I worked at Ayfie 
 inc. as a Professional Services Engineer, making custom programs and scripts for customers to integrate their systems and
